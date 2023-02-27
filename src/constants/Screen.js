@@ -1,4 +1,5 @@
 export const SCREENS = {
+  LOGIN: "LOGIN",
   HOME: "HOME",
   SCORE: "SCORE",
   EXAM_SCHEDULE: "EXAM_SCHEDULE",

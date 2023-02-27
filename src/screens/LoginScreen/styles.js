@@ -1,11 +1,13 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
+  wrapper: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FFFFFF",
+    flexDirection: "column",
+    padding: 20,
   },
   title: {
     fontSize: 25,
@@ -30,11 +32,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 15,
     color: "#717274",
-  },
-  errorMsg: {
-    color: "red",
-    fontWeight: 600,
-    textAlign: "center",
   },
 });
 

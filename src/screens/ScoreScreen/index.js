@@ -1,4 +1,4 @@
-import { SCREENS } from "../constants";
+import { SCREENS } from "../../constants";
 import { TouchableOpacity, Text } from "react-native";
 
 const ScoreScreen = ({ navigation }) => {
