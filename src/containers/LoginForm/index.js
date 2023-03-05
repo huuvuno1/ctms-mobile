@@ -43,8 +43,8 @@ const LoginForm = ({ onLoginSuccess }) => {
       {error && <Text style={styles.errorMsg}>{error}</Text>}
       <Input placeholder="Tên truy cập..." onChange={setUsername} />
       <Input placeholder="Mật khẩu..." onChange={setPassword} isSecure={true}/>
-      <TouchableHighlight style={styles.button}>
-        <Button title="Đăng nhập" color={"#FFF"} onPress={handleLogin} />
+      <TouchableHighlight style={styles.button} onPress={handleLogin}>
+        <Text style={styles.buttonText}>Đăng nhập</Text>
       </TouchableHighlight>
       <Text style={styles.forgotPassword}>Quên mật khẩu?</Text>
     </>

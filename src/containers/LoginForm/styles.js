@@ -25,6 +25,13 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     borderRadius: 7,
     marginTop: 10,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  buttonText: {
+    color: "#FFFFFF",
+    fontWeight: 600,
+    fontSize: 16
   },
   forgotPassword: {
     marginTop: 20,
