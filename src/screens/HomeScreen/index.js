@@ -13,7 +13,7 @@ const HomeScreen = ({ navigation }) => {
     })()
   }, [])
 
-  SecureStore.setItemAsync(SECURE_STORE.LOGIN_INFO, '')
+  // SecureStore.setItemAsync(SECURE_STORE.LOGIN_INFO, '')
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>

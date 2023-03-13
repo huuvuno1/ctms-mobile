@@ -1,8 +1,10 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SCREENS } from "../constants";
 import { ScoreScreen, HomeScreen, LoginScreen } from "../screens";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 const routes = [
   {
@@ -18,6 +20,7 @@ const routes = [
     options: {
       headerShown: false,
     },
+    showBottomNavigation: false
   },
   {
     name: SCREENS.SCORE,
@@ -30,6 +33,7 @@ const routes = [
 
 const Routes = () => {
   return (
+    <>
     <Stack.Navigator>
       {routes.map((route, index) => (
         <Stack.Screen
@@ -40,6 +44,7 @@ const Routes = () => {
         />
       ))}
     </Stack.Navigator>
+    </>
   );
 };
 
