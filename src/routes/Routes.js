@@ -1,13 +1,16 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SCREENS } from "../constants";
-import { ScoreScreen, HomeScreen, LoginScreen } from "../screens";
+import { ScoreScreen, LoginScreen } from "../screens";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { HomeLayout } from "../layout";
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 const routes = [
   {
     name: SCREENS.HOME,
-    component: HomeScreen,
+    component: HomeLayout,
     options: {
       headerShown: false,
     },
@@ -17,7 +20,7 @@ const routes = [
     component: LoginScreen,
     options: {
       headerShown: false,
-    },
+    }
   },
   {
     name: SCREENS.SCORE,
@@ -30,16 +33,18 @@ const routes = [
 
 const Routes = () => {
   return (
-    <Stack.Navigator>
-      {routes.map((route, index) => (
-        <Stack.Screen
-          key={index}
-          name={route.name}
-          component={route.component}
-          options={route.options || {}}
-        />
-      ))}
-    </Stack.Navigator>
+    <>
+      <Stack.Navigator>
+        {routes.map((route, index) => (
+          <Stack.Screen
+            key={index}
+            name={route.name}
+            component={route.component}
+            options={route.options || {}}
+          />
+        ))}
+      </Stack.Navigator>
+    </>
   );
 };
 
