@@ -1,6 +1,11 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SCREENS } from "../constants";
-import { ScoreScreen, HomeScreen, LoginScreen } from "../screens";
+import {
+  ScoreScreen,
+  HomeScreen,
+  LoginScreen,
+  ClassScheduleScreen,
+} from "../screens";
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +29,13 @@ const routes = [
     component: ScoreScreen,
     options: {
       headerShown: false,
+    },
+  },
+  {
+    name: SCREENS.CLASS_SCHEDULE,
+    component: ClassScheduleScreen,
+    options: {
+      headerShown: true,
     },
   },
 ];
