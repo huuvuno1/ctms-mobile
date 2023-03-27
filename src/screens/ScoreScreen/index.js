@@ -7,7 +7,7 @@ const ScoreScreen = ({ navigation }) => {
   };
   return (
     <TouchableOpacity style={{ margin: 128 }} onPress={goToHome}>
-      <Text>This is ScoreScreen</Text>
+      <Text>This is ScoreScreen 2</Text>
     </TouchableOpacity>
   );
 };
