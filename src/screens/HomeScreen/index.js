@@ -22,6 +22,12 @@ const HomeScreen = ({ navigation }) => {
           navigation.navigate(SCREENS.CLASS_SCHEDULE);
         }}
       ></Button>
+      <Button
+        title="Xem hoa don"
+        onPress={() => {
+          navigation.navigate(SCREENS.TUITION_BILL);
+        }}
+      ></Button>
     </View>
   );
 };
