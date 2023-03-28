@@ -140,6 +140,8 @@ const getExamSchedule = async () => {
   rows.each((index, row) => {
     if (index === 0) return;
     const examTime = $(row).find("td:nth-child(2)")?.text()?.trim();
+    const time = examTime.split(" ")[0];
+    const date = examTime.split(" ")[1];
     const room = $(row).find("td:nth-child(3)")?.text()?.trim();
     const subjectName = $(row).find("td:nth-child(4)")?.text()?.trim();
     const subjectId = $(row).find("td:nth-child(5)")?.text()?.trim();
@@ -148,6 +150,8 @@ const getExamSchedule = async () => {
       subjectId,
       examTime,
       room,
+      date,
+      time
     });
   });
   return result;

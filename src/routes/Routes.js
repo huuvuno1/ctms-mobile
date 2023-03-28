@@ -6,6 +6,7 @@ import {
   LoginScreen,
   ClassScheduleScreen,
   TuitionBillScreen,
+  ExamScheduleScreen,
 } from "../screens";
 
 const Stack = createNativeStackNavigator();
@@ -42,6 +43,13 @@ const routes = [
   {
     name: SCREENS.TUITION_BILL,
     component: TuitionBillScreen,
+    options: {
+      headerShown: true,
+    },
+  },
+  {
+    name: SCREENS.EXAM_SCHEDULE,
+    component: ExamScheduleScreen,
     options: {
       headerShown: true,
     },

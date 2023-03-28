@@ -28,6 +28,12 @@ const HomeScreen = ({ navigation }) => {
           navigation.navigate(SCREENS.TUITION_BILL);
         }}
       ></Button>
+      <Button
+        title="Xem lich thi"
+        onPress={() => {
+          navigation.navigate(SCREENS.EXAM_SCHEDULE);
+        }}
+      ></Button>
     </View>
   );
 };

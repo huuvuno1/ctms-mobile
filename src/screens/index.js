@@ -3,6 +3,7 @@ import ScoreScreen from "./ScoreScreen";
 import LoginScreen from "./LoginScreen";
 import ClassScheduleScreen from "./ClassScheduleScreen";
 import TuitionBillScreen from "./TuitionBillScreen";
+import ExamScheduleScreen from "./ExamScheduleScreen";
 
 export {
   HomeScreen,
@@ -10,4 +11,5 @@ export {
   LoginScreen,
   ClassScheduleScreen,
   TuitionBillScreen,
+  ExamScheduleScreen,
 };
