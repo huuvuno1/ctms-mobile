@@ -25,10 +25,9 @@ const requestLoginCtms = async (username, password, withCredentials = true) => {
       }
     );
     return response;
-    
   } catch (err) {
-    console.log(err)
-    return null
+    console.log(err);
+    return null;
   }
 };
 
@@ -48,7 +47,7 @@ const requestLogoutCtms = async (cookie) => {
       {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
-          Cookie: cookie.join("; "),
+          Cookie: cookie?.join("; "),
         },
       }
     );

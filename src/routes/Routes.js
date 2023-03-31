@@ -1,8 +1,13 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SCREENS } from "../constants";
-import { ScoreScreen, LoginScreen } from "../screens";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { HomeLayout } from "../layout";
+import {
+  ScoreScreen,
+  LoginScreen,
+  ClassScheduleScreen,
+  TuitionBillScreen,
+} from "../screens";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -27,6 +32,20 @@ const routes = [
     component: ScoreScreen,
     options: {
       headerShown: false,
+    },
+  },
+  {
+    name: SCREENS.CLASS_SCHEDULE,
+    component: ClassScheduleScreen,
+    options: {
+      headerShown: true,
+    },
+  },
+  {
+    name: SCREENS.TUITION_BILL,
+    component: TuitionBillScreen,
+    options: {
+      headerShown: true,
     },
   },
 ];
