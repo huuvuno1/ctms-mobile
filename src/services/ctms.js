@@ -153,10 +153,68 @@ const getExamSchedule = async () => {
   return result;
 };
 
+const getScore = async () => {
+  const response = await requestCtms({
+    path: "KetquaHoctap.aspx",
+  });
+  const result = [];
+  const $ = cheerio.load(response?.data || "");
+  const rows = $("#leftcontent > table.RowEffect.CenterElement > thead > tr");
+  rows.each((index, row) => {
+    if (index === 0) return;
+    const subjectName = $(row).find("td:nth-child(1)")?.text()?.trim();
+    const credit = $(row).find("td:nth-child(2)")?.text()?.trim();
+    const className = $(row).find("td:nth-child(3)")?.text()?.trim();
+    const teacher = $(row).find("td:nth-child(4)")?.text()?.trim();
+    const score_1 = $(row).find("td:nth-child(5)")?.text()?.trim();
+    const score_2 = $(row).find("td:nth-child(6)")?.text()?.trim();
+    const score_3 = $(row).find("td:nth-child(7)")?.text()?.trim();
+    result.push({
+      subjectName,
+      credit,
+      className,
+      teacher,
+      score_1,
+      score_2,
+      score_3
+    });
+  });
+  return result;
+}
+
+const getInfo = async () => {
+  const response = await requestCtms({
+    path: "KetquaHoctap.aspx",
+  });
+  const $ = cheerio.load(response?.data || "");
+  const name = $("#leftcontent > table.ThongtinSV > tbody > tr:nth-child(1) > td:nth-child(2)").text()?.replace(':', '')?.trim();
+  const birthday = $("#leftcontent > table.ThongtinSV > tbody > tr:nth-child(1) > td:nth-child(4)").text()?.replace(':', '')?.trim();
+  const formTraining = $("#leftcontent > table.ThongtinSV > tbody > tr:nth-child(2) > td:nth-child(2)").text()?.replace(':', '')?.trim();
+  const id = $("#leftcontent > table.ThongtinSV > tbody > tr:nth-child(2) > td:nth-child(4)").text()?.replace(':', '')?.trim();
+  const department = $("#leftcontent > table.ThongtinSV > tbody > tr:nth-child(3) > td:nth-child(2)").text()?.replace(':', '')?.trim();
+  const major = $("#leftcontent > table.ThongtinSV > tbody > tr:nth-child(3) > td:nth-child(4)").text()?.replace(':', '')?.trim();
+  const courses = $("#leftcontent > table.ThongtinSV > tbody > tr:nth-child(4) > td:nth-child(2)").text()?.replace(':', '')?.trim();
+  const className = $("#leftcontent > table.ThongtinSV > tbody > tr:nth-child(4) > td:nth-child(4)").text()?.replace(':', '')?.trim();
+
+
+  return {
+    name,
+    birthday,
+    formTraining,
+    id,
+    department,
+    major,
+    courses,
+    className,
+  };
+}
+
 export const ctmsService = {
+  getInfo,
   login,
   logout,
   getClassSchedule,
   getTuitionBill,
   getExamSchedule,
+  getScore
 };
