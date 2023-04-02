@@ -8,6 +8,8 @@ import {
   ClassScheduleScreen,
   TuitionBillScreen,
 } from "../screens";
+import reload from '../../assets/reload.png'
+import { Image } from "react-native";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -23,22 +25,17 @@ const routes = [
   {
     name: SCREENS.LOGIN,
     component: LoginScreen,
-    options: {
-      headerShown: false,
-    }
   },
   {
     name: SCREENS.SCORE,
     component: ScoreScreen,
-    options: {
-      headerShown: false,
-    },
   },
   {
     name: SCREENS.CLASS_SCHEDULE,
     component: ClassScheduleScreen,
     options: {
       headerShown: true,
+      title: "Lịch học",
     },
   },
   {
@@ -59,7 +56,19 @@ const Routes = () => {
             key={index}
             name={route.name}
             component={route.component}
-            options={route.options || {}}
+            options={{
+              headerRight: () => (
+                <Image style={{
+                  width: 20,
+                  height: 20,
+                }} source={reload} />
+              ),
+              presentation: 'modal',
+              animationTypeForReplace: 'push',
+              animation: 'slide_from_right',
+              ...(route.options || {})
+            }}
+
           />
         ))}
       </Stack.Navigator>
