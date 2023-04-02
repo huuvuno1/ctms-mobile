@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { Button, Image, ImageBackground, ScrollView, Text, View } from "react-native";
+import { Button, Image, ImageBackground, ScrollView, Text, Touchable, TouchableOpacity, View } from "react-native";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import * as SecureStore from 'expo-secure-store';
 import { SCREENS, SECURE_STORE } from "../../constants";
 import styles from "./styles";
-import Icon from "react-native-vector-icons/MaterialIcons";
 import BlueBg from '../../../assets/blue.jpg'
 import QC from '../../../assets/qc.jpg'
 import schedule from '../../../assets/schedule.png'
@@ -13,12 +12,15 @@ import credit from '../../../assets/credit.png'
 import score from '../../../assets/score.png'
 import bill from '../../../assets/bill.png'
 import post from '../../../assets/post.png'
+import reload from '../../../assets/reload.png'
 import { ctmsService } from "../../services";
+import { KEY, repository } from "../../repository";
 
 const Tab = createBottomTabNavigator();
 
 const DashboardScreen = ({ navigation }) => {
   const [name, setName] = useState()
+  const [subject, setSubject] = useState()
 
   useEffect(() => {
     (async () => {
@@ -27,10 +29,26 @@ const DashboardScreen = ({ navigation }) => {
         navigation.replace(SCREENS.LOGIN)
       }
 
-      const data = await ctmsService.getInfo()
-      setName(data.name)
+      let user = await repository.getData(KEY.USER_INFO)
+      console.log("data", user)
+      if (!user) {
+        user = await ctmsService.getInfo()
+      }
+      setName(user.name)
+
+      let subjects = await repository.getData(KEY.CLASS_SCHEDULE)?.[0]
+      if (!subjects) {
+        subjects = await ctmsService.getClassSchedule()
+      }
+
+      setSubject(subjects[0])
+
     })()
   }, [])
+
+  const goToScreen = (screen) => {
+    navigation.navigate(screen)
+  }
 
   return (
     <ScrollView style={styles.wrapper}>
@@ -40,7 +58,7 @@ const DashboardScreen = ({ navigation }) => {
           <Text style={styles.titleValue}>{name}</Text>
         </View>
         <View>
-          <Icon name="person" size={35} color={'#0047AB'} />
+          <Image style={styles.reload} source={reload} />
         </View>
       </View>
       <View style={styles.scheduleWrapper}>
@@ -71,26 +89,26 @@ const DashboardScreen = ({ navigation }) => {
       <View>
         <Text style={styles.titleValue}>Dịch vụ CTMS</Text>
         <View style={styles.row}>
-          <View style={styles.wrapperItem}>
+          <TouchableOpacity style={styles.wrapperItem} onPress={() => goToScreen(SCREENS.CLASS_SCHEDULE)}>
             <Image style={styles.imageItem} source={schedule} />
             <Text style={styles.textItem}>Lịch học</Text>
-          </View>
-          <View style={styles.wrapperItem}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.wrapperItem} onPress={() => goToScreen(SCREENS.EXAM_SCHEDULE)}>
             <Image style={styles.imageItem} source={exam} />
             <Text style={styles.textItem}>Lịch thi</Text>
-          </View>
-          <View style={styles.wrapperItem}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.wrapperItem} onPress={() => goToScreen(SCREENS.CREDIT)}>
             <Image style={styles.imageItem} source={credit} />
             <Text style={styles.textItem}>Tín chỉ</Text>
-          </View>
-          <View style={styles.wrapperItem}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.wrapperItem} onPress={() => goToScreen(SCREENS.SCORE)}>
             <Image style={styles.imageItem} source={score} />
             <Text style={styles.textItem}>Điểm số</Text>
-          </View>
-          <View style={styles.wrapperItem}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.wrapperItem} onPress={() => goToScreen(SCREENS.TUITION_BILL)}>
             <Image style={styles.imageItem} source={bill} />
             <Text style={styles.textItem}>Học phí</Text>
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
 

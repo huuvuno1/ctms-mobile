@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions, Platform, StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
     wrapper: {
@@ -7,7 +7,11 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         paddingHorizontal: 15,
         paddingVertical: 22,
-        fontFamily: 'monospace',
+        fontFamily: Platform.OS === 'ios' ? undefined : 'monospace',
+    },
+    reload: {
+        width: 30,
+        height: 30,
     },
 
     title: {
@@ -50,17 +54,17 @@ const styles = StyleSheet.create({
     qcTitle: {
         color: 'red',
         textTransform: 'uppercase',
-        fontFamily: 'monospace'
+        fontFamily: Platform.OS === 'ios' ? undefined : 'monospace'
     },
     qcName: {
         fontWeight: 'bold',
-        fontFamily: 'monospace',
+        fontFamily: Platform.OS === 'ios' ? undefined : 'monospace',
         marginTop: 4,
         width: '70%'
     },
     subject: {
         fontWeight: 'bold',
-        fontFamily: 'monospace',
+        fontFamily: Platform.OS === 'ios' ? undefined : 'monospace',
         marginTop: 4,
         width: '70%',
         color: '#008744',
