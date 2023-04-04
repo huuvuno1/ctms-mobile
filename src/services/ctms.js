@@ -1,5 +1,6 @@
 import { requestCtms } from "../apis";
 import * as cheerio from "cheerio";
+import dateFormat from "dateformat";
 import { requestLoginCtms, requestLogoutCtms } from "../apis/auth";
 import { repository, KEY } from "../repository";
 
@@ -25,16 +26,35 @@ const logout = async (cookies) => {
   await requestLogoutCtms(cookies);
 };
 
-const getClassSchedule = async () => {
+const getClassSchedule = async (startDay, isSave) => {
+  startDay =
+    typeof startDay === "string"
+      ? startDay
+      : dateFormat(startDay || new Date(), "yyyy/mm/dd");
+
+  console.log("startDay", startDay);
+
   try {
     const response = await requestCtms({
       path: "Lichhoc.aspx?sid=",
+      method: "POST",
+      body: {
+        __VIEWSTATE:
+          "/wEPDwUKMTA4NDM3NDc2OGQYBwUzY3RsMDAkTGVmdENvbCRMaWNoaG9jMSRycHRyTGljaGhvYyRjdGwwNSRncnZMaWNoaG9jDzwrAAwBCAIBZAUzY3RsMDAkTGVmdENvbCRMaWNoaG9jMSRycHRyTGljaGhvYyRjdGwwMyRncnZMaWNoaG9jDzwrAAwBCAIBZAUzY3RsMDAkTGVmdENvbCRMaWNoaG9jMSRycHRyTGljaGhvYyRjdGwwMiRncnZMaWNoaG9jDzwrAAwBCAIBZAUzY3RsMDAkTGVmdENvbCRMaWNoaG9jMSRycHRyTGljaGhvYyRjdGwwNiRncnZMaWNoaG9jDzwrAAwBCAIBZAUzY3RsMDAkTGVmdENvbCRMaWNoaG9jMSRycHRyTGljaGhvYyRjdGwwMSRncnZMaWNoaG9jDzwrAAwBCGZkBTNjdGwwMCRMZWZ0Q29sJExpY2hob2MxJHJwdHJMaWNoaG9jJGN0bDA0JGdydkxpY2hob2MPPCsADAEIAgFkBTNjdGwwMCRMZWZ0Q29sJExpY2hob2MxJHJwdHJMaWNoaG9jJGN0bDAwJGdydkxpY2hob2MPPCsADAEIZmSkFa8eLkvJyFtSd8jDUX6jAXl4UqywX6kbCvDedzL1iA==",
+        __VIEWSTATEGENERATOR: "CB78C13A",
+        __EVENTVALIDATION:
+          "/wEdAAWAZedefWk1Oq9XbG32bj3SWWWHEhzFiGyQmAroNHRecPGp81KLC9U2/agHpgpfb4ZN6O2MwGQTfovT88oxno1QXParDuHQyN/7wnDAEyPKu51xrFynUe0dgdwOVipS86H2v7Iy9/GjQ46IARXhb7fK",
+        ctl00$LeftCol$Lichhoc1$txtNgaydautuan: startDay,
+        ctl00$LeftCol$Lichhoc1$btnXemlich: "Xem lịch",
+      },
     });
     const $ = cheerio.load(response?.data || "");
     const tables = $("table");
     const result = [];
     tables.each((index, table) => {
       const day = $(`#LeftCol_Lichhoc1_pnView > div`)[index];
+      if (!day) return;
+
       const data = {
         day: $($(day).children()[0]).text().replace(/\s+/g, " "),
         classes: [],
@@ -61,9 +81,13 @@ const getClassSchedule = async () => {
       });
       result.push(data);
     });
-    repository.storeData(KEY.CLASS_SCHEDULE, result)
+    if (isSave !== false) {
+      repository.storeData(KEY.CLASS_SCHEDULE, result);
+    }
+
     return result;
-  } catch {
+  } catch (e) {
+    console.log("Get class schedule from cache", e);
     return repository.getData(KEY.CLASS_SCHEDULE);
   }
 };
@@ -121,7 +145,7 @@ const getTuitionBill = async () => {
       });
     });
 
-    repository.storeData(KEY.TUITION_BILL, result)
+    repository.storeData(KEY.TUITION_BILL, result);
     return result;
   } catch {
     return repository.getData(KEY.TUITION_BILL);
@@ -161,7 +185,7 @@ const getExamSchedule = async () => {
         room,
       });
     });
-    repository.storeData(KEY.EXAM_SCHEDULE, result)
+    repository.storeData(KEY.EXAM_SCHEDULE, result);
     return result;
   } catch {
     return repository.getData(KEY.EXAM_SCHEDULE);
@@ -191,11 +215,11 @@ const getScore = async () => {
       teacher,
       score_1,
       score_2,
-      score_3
+      score_3,
     });
   });
   return result;
-}
+};
 
 const getInfo = async () => {
   try {
@@ -203,24 +227,64 @@ const getInfo = async () => {
       path: "KetquaHoctap.aspx",
     });
     const $ = cheerio.load(response?.data || "");
-    const user = {}
-    user.name = $("#leftcontent > table.ThongtinSV > tbody > tr:nth-child(1) > td:nth-child(2)").text()?.replace(':', '')?.trim();
-    user.birthday = $("#leftcontent > table.ThongtinSV > tbody > tr:nth-child(1) > td:nth-child(4)").text()?.replace(':', '')?.trim();
-    user.formTraining = $("#leftcontent > table.ThongtinSV > tbody > tr:nth-child(2) > td:nth-child(2)").text()?.replace(':', '')?.trim();
-    user.id = $("#leftcontent > table.ThongtinSV > tbody > tr:nth-child(2) > td:nth-child(4)").text()?.replace(':', '')?.trim();
-    user.department = $("#leftcontent > table.ThongtinSV > tbody > tr:nth-child(3) > td:nth-child(2)").text()?.replace(':', '')?.trim();
-    user.major = $("#leftcontent > table.ThongtinSV > tbody > tr:nth-child(3) > td:nth-child(4)").text()?.replace(':', '')?.trim();
-    user.courses = $("#leftcontent > table.ThongtinSV > tbody > tr:nth-child(4) > td:nth-child(2)").text()?.replace(':', '')?.trim();
-    user.className = $("#leftcontent > table.ThongtinSV > tbody > tr:nth-child(4) > td:nth-child(4)").text()?.replace(':', '')?.trim();
+    const user = {};
+    user.name = $(
+      "#leftcontent > table.ThongtinSV > tbody > tr:nth-child(1) > td:nth-child(2)"
+    )
+      .text()
+      ?.replace(":", "")
+      ?.trim();
+    user.birthday = $(
+      "#leftcontent > table.ThongtinSV > tbody > tr:nth-child(1) > td:nth-child(4)"
+    )
+      .text()
+      ?.replace(":", "")
+      ?.trim();
+    user.formTraining = $(
+      "#leftcontent > table.ThongtinSV > tbody > tr:nth-child(2) > td:nth-child(2)"
+    )
+      .text()
+      ?.replace(":", "")
+      ?.trim();
+    user.id = $(
+      "#leftcontent > table.ThongtinSV > tbody > tr:nth-child(2) > td:nth-child(4)"
+    )
+      .text()
+      ?.replace(":", "")
+      ?.trim();
+    user.department = $(
+      "#leftcontent > table.ThongtinSV > tbody > tr:nth-child(3) > td:nth-child(2)"
+    )
+      .text()
+      ?.replace(":", "")
+      ?.trim();
+    user.major = $(
+      "#leftcontent > table.ThongtinSV > tbody > tr:nth-child(3) > td:nth-child(4)"
+    )
+      .text()
+      ?.replace(":", "")
+      ?.trim();
+    user.courses = $(
+      "#leftcontent > table.ThongtinSV > tbody > tr:nth-child(4) > td:nth-child(2)"
+    )
+      .text()
+      ?.replace(":", "")
+      ?.trim();
+    user.className = $(
+      "#leftcontent > table.ThongtinSV > tbody > tr:nth-child(4) > td:nth-child(4)"
+    )
+      .text()
+      ?.replace(":", "")
+      ?.trim();
 
-    repository.storeData(KEY.USER_INFO, user)
+    repository.storeData(KEY.USER_INFO, user);
 
     return user;
   } catch (e) {
-    console.log('getInfo error', e)
+    console.log("getInfo error", e);
     return repository.getData(KEY.USER_INFO);
   }
-}
+};
 
 export const ctmsService = {
   getInfo,
@@ -229,5 +293,5 @@ export const ctmsService = {
   getClassSchedule,
   getTuitionBill,
   getExamSchedule,
-  getScore
+  getScore,
 };

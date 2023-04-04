@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SCREENS } from "../constants";
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { HomeLayout } from "../layout";
 import {
   ScoreScreen,
@@ -8,7 +8,7 @@ import {
   ClassScheduleScreen,
   TuitionBillScreen,
 } from "../screens";
-import reload from '../../assets/reload.png'
+import reload from "../../assets/reload.png";
 import { Image } from "react-native";
 
 const Stack = createNativeStackNavigator();
@@ -25,6 +25,9 @@ const routes = [
   {
     name: SCREENS.LOGIN,
     component: LoginScreen,
+    options: {
+      headerShown: false,
+    },
   },
   {
     name: SCREENS.SCORE,
@@ -58,17 +61,18 @@ const Routes = () => {
             component={route.component}
             options={{
               headerRight: () => (
-                <Image style={{
-                  width: 20,
-                  height: 20,
-                }} source={reload} />
+                <Image
+                  style={{
+                    width: 20,
+                    height: 20,
+                  }}
+                  source={reload}
+                />
               ),
-              presentation: 'modal',
-              animationTypeForReplace: 'push',
-              animation: 'slide_from_right',
-              ...(route.options || {})
+              animationTypeForReplace: "push",
+              animation: "slide_from_right",
+              ...(route.options || {}),
             }}
-
           />
         ))}
       </Stack.Navigator>
