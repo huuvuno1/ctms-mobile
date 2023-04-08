@@ -32,6 +32,9 @@ const routes = [
   {
     name: SCREENS.SCORE,
     component: ScoreScreen,
+    options: {
+      title: "Kết quả học tập",
+    }
   },
   {
     name: SCREENS.CLASS_SCHEDULE,
@@ -46,6 +49,7 @@ const routes = [
     component: TuitionBillScreen,
     options: {
       headerShown: true,
+      title: "Học phí",
     },
   },
 ];

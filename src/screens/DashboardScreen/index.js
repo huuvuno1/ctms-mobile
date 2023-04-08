@@ -37,7 +37,7 @@ const DashboardScreen = ({ navigation }) => {
       }
 
       let user = await repository.getData(KEY.USER_INFO);
-      console.log("data", user);
+      // console.log("data", user);
       if (!user || !user.name) {
         user = await ctmsService.getInfo();
       }

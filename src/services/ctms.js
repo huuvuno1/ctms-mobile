@@ -92,7 +92,17 @@ const getClassSchedule = async (startDay, isSave) => {
   }
 };
 
-const getTuitionBill = async () => {
+const getTuitionBill = async (startDay, endDay) => {
+  startDay =
+    typeof startDay === "string"
+      ? startDay
+      : dateFormat(startDay || new Date(), "yyyy/mm/dd");
+
+  endDay =
+    typeof endDay === "string"
+      ? endDay
+      : dateFormat(endDay || new Date(), "yyyy/mm/dd");
+  console.log(startDay, endDay)
   try {
     const response = await requestCtms({
       path: "HocphiDsHoadonSV.aspx",
@@ -106,34 +116,26 @@ const getTuitionBill = async () => {
         __VIEWSTATEGENERATOR: "0651EE50",
         __EVENTVALIDATION:
           "ZkklRitHMGUUF4h/QheT6BKPw2dFc96g0AV0qSZG7q0prazegax+pDaXZ8WkfNLZ7LGDzkNGUVldDiVPhdahrSfdPCQSFDF7g+w/iY+9A5JBu+zXN4ABJwbVmACK7y9qqoTFn02+NBsxaVTypXNPFfos1szNIR0aDraFudEiNZdUel1LIv+zn33xfMc25Set",
-        ctl00$LeftCol$DsHoadonHocphi1$txtNgaylap1: "2022-03-27",
-        ctl00$LeftCol$DsHoadonHocphi1$txtNgaylap2: "2023-03-27",
+        ctl00$LeftCol$DsHoadonHocphi1$txtNgaylap1: startDay,
+        ctl00$LeftCol$DsHoadonHocphi1$txtNgaylap2: endDay,
         ctl00$LeftCol$DsHoadonHocphi1$btnXemdanhsach: "Xem danh sách",
       },
     });
 
     const $ = cheerio.load(response?.data || "");
     const rows = $("#LeftCol_DsHoadonHocphi1_grvHoadon > tbody > tr");
-    const result = [];
+    let result = [];
     rows.each((index, row) => {
       if (index === 0) return;
-      const studentId = $(row).find("td:nth-child(1)")?.text()?.trim();
-      const studentName = $(row).find("td:nth-child(2)")?.text()?.trim();
-      const birthday = $(row).find("td:nth-child(3)")?.text()?.trim();
-      const className = $(row).find("td:nth-child(4)")?.text()?.trim();
       const billId = $(row).find("td:nth-child(5)")?.text()?.trim();
       const createdBy = $(row).find("td:nth-child(6)")?.text()?.trim();
-      const createdAt = $(row).find("td:nth-child(7)")?.text()?.trim();
+      const createdAt = $(row).find("td:nth-child(7)")?.text()?.replace("'", '')?.trim()?.split(' ')?.[1];
       const totalCredits = $(row).find("td:nth-child(8)")?.text()?.trim();
       const totalMoney = $(row).find("td:nth-child(9)")?.text()?.trim();
       const reduce = $(row).find("td:nth-child(10)")?.text()?.trim();
       const paid = $(row).find("td:nth-child(11)")?.text()?.trim();
       const owed = $(row).find("td:nth-child(12)")?.text()?.trim();
       result.push({
-        studentId,
-        studentName,
-        birthday,
-        className,
         billId,
         createdBy,
         createdAt,
@@ -145,9 +147,12 @@ const getTuitionBill = async () => {
       });
     });
 
+    result = result.reverse()
+
     repository.storeData(KEY.TUITION_BILL, result);
     return result;
-  } catch {
+  } catch (e) {
+    console.log('Load from cache', e)
     return repository.getData(KEY.TUITION_BILL);
   }
 };
