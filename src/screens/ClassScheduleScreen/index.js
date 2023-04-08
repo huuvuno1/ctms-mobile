@@ -15,27 +15,11 @@ import room from "../../../assets/room.png";
 import status from "../../../assets/status.png";
 import unique from "../../../assets/unique.png";
 import { TouchableOpacity } from "react-native";
+import { DatePicker } from "../../components";
 
 const ClassScheduleScreen = ({ navigation }) => {
   const [data, setData] = useState([]);
   const [startDay, setStartDay] = useState(new Date());
-  const [displayDatePicker, setDisplayDatePicker] = useState(false);
-
-  const handleStartDateChange = (e, date) => {
-    setDisplayDatePicker(false);
-    setStartDay(date);
-  };
-
-  const handleShiftWeek = (type) => {
-    let day = new Date(startDay);
-    if (type === "prev") {
-      day.setDate(day.getDate() - 7);
-    } else {
-      day.setDate(day.getDate() + 7);
-    }
-    setStartDay(day);
-  };
-
   useEffect(() => {
     const getData = async () => {
       const data = await ctmsService.getClassSchedule(startDay, false);
@@ -55,36 +39,7 @@ const ClassScheduleScreen = ({ navigation }) => {
 
   return (
     <View style={styles.wrapper}>
-      <View style={styles.navigate}>
-        <TouchableOpacity
-          style={styles.datePicker}
-          onPress={() => setDisplayDatePicker(true)}
-        >
-          <Text style={styles.dateLabel}>Tuần từ</Text>
-          <Text style={styles.dateValue}>
-            {dateFormat(startDay, "dd / mm / yyyy")}
-          </Text>
-          {displayDatePicker && (
-            <RNDateTimePicker
-              value={startDay || new Date()}
-              onChange={handleStartDateChange}
-            />
-          )}
-          <Image style={styles.imageItem} source={picker} />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.nextWeek}
-          onPress={() => handleShiftWeek("prev")}
-        >
-          <Image style={styles.btnNav} source={prev} />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.nextWeek}
-          onPress={() => handleShiftWeek("next")}
-        >
-          <Image style={styles.btnNav} source={next} />
-        </TouchableOpacity>
-      </View>
+      <DatePicker onChange={setStartDay} />
       <ScrollView style={styles.wrapSchedule}>
         {data.map((item, index) => (
           <View
@@ -137,8 +92,8 @@ const ClassScheduleScreen = ({ navigation }) => {
                       data.time.startsWith("07")
                         ? morning
                         : data.time.startsWith("13")
-                        ? afternoon
-                        : evening
+                          ? afternoon
+                          : evening
                     }
                     style={{
                       width: 30,

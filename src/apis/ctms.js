@@ -6,7 +6,7 @@ const requestCtms = async (
   { path = "", method = "GET", param = {}, body = {} },
   withCredentials = false
 ) => {
-  console.log("requestCtms", method);
+  console.log("requestCtms", method, path);
 
   try {
     const response = await axiosInstance({
