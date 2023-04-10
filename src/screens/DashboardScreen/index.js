@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import {
   Image,
   ImageBackground,
@@ -6,22 +6,22 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from "react-native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import * as SecureStore from "expo-secure-store";
-import { SCREENS, SECURE_STORE } from "../../constants";
-import styles from "./styles";
-import BlueBg from "../../../assets/blue.jpg";
-import QC from "../../../assets/qc.jpg";
-import schedule from "../../../assets/schedule.png";
-import exam from "../../../assets/exam.png";
-import credit from "../../../assets/credit.png";
-import score from "../../../assets/score.png";
-import bill from "../../../assets/bill.png";
-import post from "../../../assets/post.png";
-import reload from "../../../assets/reload.png";
-import { ctmsService } from "../../services";
-import { KEY, repository } from "../../repository";
+} from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import * as SecureStore from 'expo-secure-store';
+import { SCREENS, SECURE_STORE } from '../../constants';
+import styles from './styles';
+import BlueBg from '../../../assets/blue.jpg';
+import QC from '../../../assets/qc.jpg';
+import schedule from '../../../assets/schedule.png';
+import exam from '../../../assets/exam.png';
+import credit from '../../../assets/credit.png';
+import score from '../../../assets/score.png';
+import bill from '../../../assets/bill.png';
+import post from '../../../assets/post.png';
+import reload from '../../../assets/reload.png';
+import { ctmsService } from '../../services';
+import { KEY, repository } from '../../repository';
 
 const Tab = createBottomTabNavigator();
 
@@ -76,7 +76,7 @@ const DashboardScreen = ({ navigation }) => {
               style={[
                 styles.qcName,
                 {
-                  fontWeight: "normal",
+                  fontWeight: 'normal',
                 },
               ]}
             >
@@ -149,10 +149,13 @@ const DashboardScreen = ({ navigation }) => {
       >
         <Text style={styles.titleValue2}>Dịch vụ FITHOU</Text>
         <View style={styles.row}>
-          <View style={styles.wrapperItem}>
+          <TouchableOpacity
+            style={styles.wrapperItem}
+            onPress={() => goToScreen(SCREENS.FITHOU_ARTICLES)}
+          >
             <Image style={styles.imageItem} source={post} />
             <Text style={styles.textItem}>Bài viết</Text>
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>

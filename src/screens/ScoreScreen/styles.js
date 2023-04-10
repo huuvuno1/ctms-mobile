@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   summaryWrapper: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 20,
+    marginBottom: 200,
   },
   summaryItem: {
     padding: 8,
