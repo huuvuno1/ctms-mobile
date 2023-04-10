@@ -8,6 +8,8 @@ import {
   ClassScheduleScreen,
   TuitionBillScreen,
   FithouArticlesScreen,
+  TuitionBillDetailScreen,
+  ExamScheduleScreen,
 } from '../screens';
 import reload from '../../assets/reload.png';
 import { Image } from 'react-native';
@@ -67,6 +69,13 @@ const routes = [
     options: {
       headerShown: true,
       title: 'Chi tiết hóa đơn',
+    },
+  },
+  {
+    name: SCREENS.EXAM_SCHEDULE,
+    component: ExamScheduleScreen,
+    options: {
+      headerShown:true,
     },
   },
 ];

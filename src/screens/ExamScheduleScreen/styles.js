@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     padding: 8,
     marginTop: 15,
     paddingBottom: 30,
-    height: Dimensions.get("window").height - 200,
+    // height: Dimensions.get("window").height - 200,
     backgroundColor: '#ecf2f8'
   },
   teacher: {
