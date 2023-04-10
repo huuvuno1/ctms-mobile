@@ -29,7 +29,7 @@ instance.interceptors.request.use(async function (configs) {
 
 instance.interceptors.response.use(function (response) {
   // logout after call api
-  // ctmsService.logout(response.config.headers["Cookie"]);
+  ctmsService.logout(response.config.headers["Cookie"]);
   return response;
 });
 

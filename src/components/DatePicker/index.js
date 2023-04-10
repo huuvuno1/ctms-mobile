@@ -1,5 +1,5 @@
 import { TouchableOpacity, Text, View, Image } from "react-native";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import dateFormat from "dateformat";
 import styles from "./styles";
@@ -13,11 +13,11 @@ const DatePicker = ({ onChange, label, style, shiftValue, defaultValue }) => {
   const handleStartDateChange = (e, date) => {
     setDisplayDatePicker(false);
     setStartDay(date);
-    onChange(date)
+    onChange(date);
   };
 
   const handleShiftWeek = (type) => {
-    const value = shiftValue || 7
+    const value = shiftValue || 7;
     let day = new Date(startDay);
     if (type === "prev") {
       day.setDate(day.getDate() - value);
@@ -25,15 +25,16 @@ const DatePicker = ({ onChange, label, style, shiftValue, defaultValue }) => {
       day.setDate(day.getDate() + value);
     }
     setStartDay(day);
-    onChange(day)
+    onChange(day);
   };
+  console.log(startDay, defaultValue);
   return (
     <View style={[styles.navigate, style]}>
       <TouchableOpacity
         style={styles.datePicker}
         onPress={() => setDisplayDatePicker(true)}
       >
-        <Text style={styles.dateLabel}>{label || 'Tuần từ'}</Text>
+        <Text style={styles.dateLabel}>{label || "Tuần từ"}</Text>
         <Text style={styles.dateValue}>
           {dateFormat(startDay, "dd / mm / yyyy")}
         </Text>
