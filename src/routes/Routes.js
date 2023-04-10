@@ -8,6 +8,8 @@ import {
   ClassScheduleScreen,
   TuitionBillScreen,
   FithouArticlesScreen,
+  SplashScreen,
+  TuitionBillDetailScreen
 } from '../screens';
 import reload from '../../assets/reload.png';
 import { Image } from 'react-native';
@@ -16,6 +18,13 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const routes = [
+  {
+    name: SCREENS.SPLASH,
+    component: SplashScreen,
+    options: {
+      headerShown: false,
+    },
+  },
   {
     name: SCREENS.HOME,
     component: HomeLayout,

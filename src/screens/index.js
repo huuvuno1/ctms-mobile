@@ -7,6 +7,7 @@ import ClassScheduleScreen from './ClassScheduleScreen';
 import TuitionBillScreen from './TuitionBillScreen';
 import FithouArticlesScreen from './FithouArticles';
 import TuitionBillDetailScreen from './TuitionBillDetailScreen';
+import SplashScreen from './SplashScreen';
 
 export {
   ScoreScreen,
@@ -18,4 +19,5 @@ export {
   DashboardScreen,
   FithouArticlesScreen,
   TuitionBillDetailScreen,
+  SplashScreen,
 };
