@@ -102,7 +102,7 @@ const getTuitionBill = async (startDay, endDay) => {
     typeof endDay === "string"
       ? endDay
       : dateFormat(endDay || new Date(), "yyyy/mm/dd");
-  console.log(startDay, endDay)
+  console.log(startDay, endDay);
   try {
     const response = await requestCtms({
       path: "HocphiDsHoadonSV.aspx",
@@ -129,7 +129,12 @@ const getTuitionBill = async (startDay, endDay) => {
       if (index === 0) return;
       const billId = $(row).find("td:nth-child(5)")?.text()?.trim();
       const createdBy = $(row).find("td:nth-child(6)")?.text()?.trim();
-      const createdAt = $(row).find("td:nth-child(7)")?.text()?.replace("'", '')?.trim()?.split(' ')?.[1];
+      const createdAt = $(row)
+        .find("td:nth-child(7)")
+        ?.text()
+        ?.replace("'", "")
+        ?.trim()
+        ?.split(" ")?.[1];
       const totalCredits = $(row).find("td:nth-child(8)")?.text()?.trim();
       const totalMoney = $(row).find("td:nth-child(9)")?.text()?.trim();
       const reduce = $(row).find("td:nth-child(10)")?.text()?.trim();
@@ -147,12 +152,12 @@ const getTuitionBill = async (startDay, endDay) => {
       });
     });
 
-    result = result.reverse()
+    result = result.reverse();
 
     repository.storeData(KEY.TUITION_BILL, result);
     return result;
   } catch (e) {
-    console.log('Load from cache', e)
+    console.log("Load from cache", e);
     return repository.getData(KEY.TUITION_BILL);
   }
 };
@@ -203,9 +208,8 @@ const getScore = async () => {
   });
   const result = [];
   const $ = cheerio.load(response?.data || "");
-  const rows = $("#leftcontent > table.RowEffect.CenterElement > thead > tr");
+  const rows = $("#leftcontent > table.RowEffect.CenterElement > tbody > tr");
   rows.each((index, row) => {
-    if (index === 0) return;
     const subjectName = $(row).find("td:nth-child(1)")?.text()?.trim();
     const credit = $(row).find("td:nth-child(2)")?.text()?.trim();
     const className = $(row).find("td:nth-child(3)")?.text()?.trim();
