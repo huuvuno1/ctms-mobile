@@ -196,7 +196,7 @@ const getExamSchedule = async () => {
       });
     });
     repository.storeData(KEY.EXAM_SCHEDULE, result);
-    return result;
+    return result.reverse();
   } catch {
     return repository.getData(KEY.EXAM_SCHEDULE);
   }

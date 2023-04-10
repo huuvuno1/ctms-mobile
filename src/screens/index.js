@@ -5,6 +5,7 @@ import NotificationScreen from "./NotificationScreen";
 import DashboardScreen from "./DashboardScreen";
 import ClassScheduleScreen from "./ClassScheduleScreen";
 import TuitionBillScreen from "./TuitionBillScreen";
+import ExamScheduleScreen from "./ExamScheduleScreen";
 
 export {
   ScoreScreen,
@@ -13,5 +14,6 @@ export {
   TuitionBillScreen,
   NotificationScreen,
   SettingScreen,
-  DashboardScreen
+  DashboardScreen,
+  ExamScheduleScreen,
 };
