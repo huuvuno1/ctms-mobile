@@ -7,6 +7,7 @@ import {
   LoginScreen,
   ClassScheduleScreen,
   TuitionBillScreen,
+  TuitionBillDetailScreen,
 } from "../screens";
 import reload from "../../assets/reload.png";
 import { Image } from "react-native";
@@ -34,7 +35,7 @@ const routes = [
     component: ScoreScreen,
     options: {
       title: "Kết quả học tập",
-    }
+    },
   },
   {
     name: SCREENS.CLASS_SCHEDULE,
@@ -50,6 +51,14 @@ const routes = [
     options: {
       headerShown: true,
       title: "Học phí",
+    },
+  },
+  {
+    name: SCREENS.TUITION_BILL_DETAIL,
+    component: TuitionBillDetailScreen,
+    options: {
+      headerShown: true,
+      title: "Chi tiết hóa đơn",
     },
   },
 ];

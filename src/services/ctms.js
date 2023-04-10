@@ -295,6 +295,67 @@ const getInfo = async () => {
   }
 };
 
+export const getTuitionBillDetail = async (id) => {
+  try {
+    const response = await requestCtms({
+      path: "HocphiChitietHoadonSV.aspx?bid=" + id,
+    });
+    const $ = cheerio.load(response?.data || "");
+    const result = {};
+    const subjects = [];
+    const rows = $("#leftcontent > table.ThongtinSV.RowEffect > tbody > tr");
+    rows.each((index, row) => {
+      if (index === 0) return;
+
+      if (rows.length === index + 4) {
+        result.totalMoney = $(row).find("td:nth-child(2)")?.text()?.trim();
+        return;
+      }
+
+      if (rows.length === index + 3) {
+        result.reduce = $(row).find("td:nth-child(2)")?.text()?.trim();
+        return;
+      }
+
+      if (rows.length === index + 2) {
+        result.paid = $(row).find("td:nth-child(2)")?.text()?.trim();
+        return;
+      }
+
+      if (rows.length === index + 1) {
+        result.debt = $(row).find("td:nth-child(2)")?.text()?.trim();
+        return;
+      }
+      const className = $(row).find("td:nth-child(2)")?.text()?.trim();
+      const subjectName = $(row).find("td:nth-child(3)")?.text()?.trim();
+      const credit = $(row).find("td:nth-child(4)")?.text()?.trim();
+      const unitPrice = $(row).find("td:nth-child(5)")?.text()?.trim();
+      const amount = $(row).find("td:nth-child(6)")?.text()?.trim();
+      subjects.push({
+        className,
+        subjectName,
+        credit,
+        unitPrice,
+        amount,
+      });
+    });
+
+    result.subjects = subjects;
+    result.createdAt = $(
+      "#leftcontent > table.ThongtinSV.CenterElement > tbody > tr:nth-child(1) > td:nth-child(4)"
+    )
+      .text()
+      ?.replace(":", "")
+      ?.trim();
+    result.updatedAt = $("#leftcontent > div:nth-child(5)").text()?.trim();
+
+    return result;
+  } catch (e) {
+    console.log("getTuitionBillDetail error", e);
+    return [];
+  }
+};
+
 export const ctmsService = {
   getInfo,
   login,
@@ -303,4 +364,5 @@ export const ctmsService = {
   getTuitionBill,
   getExamSchedule,
   getScore,
+  getTuitionBillDetail,
 };
