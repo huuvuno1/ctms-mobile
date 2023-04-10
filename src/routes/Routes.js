@@ -61,6 +61,14 @@ const routes = [
       title: 'Fithou Articles',
     },
   },
+  {
+    name: SCREENS.TUITION_BILL_DETAIL,
+    component: TuitionBillDetailScreen,
+    options: {
+      headerShown: true,
+      title: 'Chi tiết hóa đơn',
+    },
+  },
 ];
 
 const Routes = () => {
