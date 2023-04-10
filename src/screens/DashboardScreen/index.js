@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {
   Image,
   ImageBackground,
+  Linking,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -83,9 +84,12 @@ const DashboardScreen = ({ navigation }) => {
               Sử dụng ngay trên nền tảng Messenger
             </Text>
           </View>
-          <View style={styles.wrapperBtnQc}>
+          <TouchableOpacity
+            style={styles.wrapperBtnQc}
+            onPress={() => Linking.openURL("https://facebook.com/fithoutool")}
+          >
             <Text style={styles.btnQc}>Chiến luôn</Text>
-          </View>
+          </TouchableOpacity>
         </ImageBackground>
       </View>
       <View style={styles.scheduleWrapper}>

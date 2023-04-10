@@ -356,6 +356,92 @@ export const getTuitionBillDetail = async (id) => {
   }
 };
 
+const getCredits = async () => {
+  const result = {
+    canRegister: [],
+    registered: [],
+  };
+  try {
+    let response = await requestCtms({
+      path: "DangkyLoptinchi.aspx?sid=",
+    });
+
+    const match = /getmodule:" \+ (\d+)/g.exec(response.data);
+    const id = match[1];
+
+    console.log("id", id);
+
+    response = await requestCtms({
+      path: "DangkyLoptinchi.aspx?sid=",
+      method: "POST",
+      body: {
+        __VIEWSTATE:
+          "/wEPDwUJNTU0NDQwMzk4ZGRMExXiqzsNsCGrc9WjobZoDcCzO2od6+mLzUrLiU+Rww==",
+        __VIEWSTATEGENERATOR: "4B900DBD",
+        __CALLBACKID: "__Page",
+        __CALLBACKPARAM: "getmodule:" + id,
+      },
+    });
+    const $ = cheerio.load(response?.data || "");
+    // console.log("response", response?.data);
+
+    const rows1 = $("#dvLopChoDangky > table > tbody > tr");
+    rows1.each((index, row) => {
+      if (index === 0) return;
+      const className = $(row).find("td:nth-child(2)")?.text()?.trim();
+      const teacher = $(row).find("td:nth-child(3)")?.text()?.trim();
+      const minStudent = $(row).find("td:nth-child(4)")?.text()?.trim();
+      const maxStudent = $(row).find("td:nth-child(5)")?.text()?.trim();
+      const registered = $(row).find("td:nth-child(6)")?.text()?.trim();
+      const registrationDeadline = $(row)
+        .find("td:nth-child(7)")
+        ?.text()
+        ?.trim();
+      const plan = $(row).find("td:nth-child(8)")?.text()?.trim();
+
+      result.canRegister.push({
+        className,
+        teacher,
+        minStudent,
+        maxStudent,
+        registered,
+        registrationDeadline,
+        plan,
+      });
+    });
+
+    const rows2 = $("#dvLopVuaDangky > table > tbody > tr");
+    rows2.each((index, row) => {
+      if (index === 0) return;
+      const className = $(row).find("td:nth-child(2)")?.text()?.trim();
+      const teacher = $(row).find("td:nth-child(3)")?.text()?.trim();
+      const minStudent = $(row).find("td:nth-child(4)")?.text()?.trim();
+      const maxStudent = $(row).find("td:nth-child(5)")?.text()?.trim();
+      const registered = $(row).find("td:nth-child(6)")?.text()?.trim();
+      const registrationDeadline = $(row)
+        .find("td:nth-child(7)")
+        ?.text()
+        ?.trim();
+      const plan = $(row).find("td:nth-child(8)")?.text()?.trim();
+
+      result.registered.push({
+        className,
+        teacher,
+        minStudent,
+        maxStudent,
+        registered,
+        registrationDeadline,
+        plan,
+      });
+    });
+
+    return result;
+  } catch (e) {
+    console.log("getCredits error", e);
+    return result;
+  }
+};
+
 export const ctmsService = {
   getInfo,
   login,
@@ -365,4 +451,5 @@ export const ctmsService = {
   getExamSchedule,
   getScore,
   getTuitionBillDetail,
+  getCredits,
 };

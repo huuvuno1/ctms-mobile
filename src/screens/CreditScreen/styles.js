@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    paddingTop: 30,
+    // paddingTop: 30,
     backgroundColor: "#fff",
   },
   header: {
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
   dataWrapper: { marginTop: -1 },
   row: {
-    height: 50,
+    minHeight: 50,
     backgroundColor: "#D5F5E3",
   },
   summaryWrapper: {
@@ -68,6 +68,11 @@ const styles = StyleSheet.create({
   rowText: {
     color: "#17202A",
     fontWeight: "500",
+  },
+  labelCredit: {
+    fontWeight: "600",
+    fontSize: 19,
+    marginBottom: 13,
   },
 });
 

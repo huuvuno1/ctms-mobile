@@ -6,6 +6,7 @@ import DashboardScreen from "./DashboardScreen";
 import ClassScheduleScreen from "./ClassScheduleScreen";
 import TuitionBillScreen from "./TuitionBillScreen";
 import TuitionBillDetailScreen from "./TuitionBillDetailScreen";
+import CreditScreen from "./CreditScreen";
 
 export {
   ScoreScreen,
@@ -16,4 +17,5 @@ export {
   SettingScreen,
   DashboardScreen,
   TuitionBillDetailScreen,
+  CreditScreen,
 };
