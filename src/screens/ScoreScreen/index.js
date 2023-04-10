@@ -84,7 +84,7 @@ const ScoreScreen = ({ navigation }) => {
               data={state.tableHead}
               widthArr={state.widthArr}
               style={styles.header}
-              textStyle={[styles.text, styles.headerText]}
+              textStyle={{ ...styles.text, ...styles.headerText }}
             />
           </Table>
           <ScrollView style={styles.dataWrapper}>
@@ -95,11 +95,11 @@ const ScoreScreen = ({ navigation }) => {
                     key={index}
                     data={rowData}
                     widthArr={state.widthArr}
-                    style={[
-                      styles.row,
-                      index % 2 && { backgroundColor: "#A9DFBF" },
-                    ]}
-                    textStyle={[styles.text, styles.rowText]}
+                    style={{
+                      ...styles.row,
+                      ...(index % 2 ? { backgroundColor: "#A9DFBF" } : {}),
+                    }}
+                    textStyle={{ ...styles.text, ...styles.rowText }}
                   />
                 ))
               ) : (

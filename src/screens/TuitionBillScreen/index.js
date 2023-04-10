@@ -4,6 +4,7 @@ import { ctmsService } from "../../services";
 import styles from "./styles";
 import { DatePicker } from "../../components";
 import into from "../../../assets/into.png";
+import { SCREENS } from "../../constants";
 
 const fields = [
   { key: "totalCredits", name: "Tổng tín chỉ" },
@@ -109,6 +110,14 @@ const TuitionBillScreen = ({ navigation }) => {
                                       alignItems: "center",
                                     },
                                   ]}
+                                  onPress={() => {
+                                    navigation.navigate(
+                                      SCREENS.TUITION_BILL_DETAIL,
+                                      {
+                                        billId: item.billId,
+                                      }
+                                    );
+                                  }}
                                 >
                                   <Image style={styles.into} source={into} />
                                 </TouchableOpacity>
