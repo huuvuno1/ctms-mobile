@@ -1,0 +1,56 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Widget.Ctmsmobile.AppWidget.Container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/AppTheme.AppWidgetContainer"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:id="@+id/appwidget_text"
+        style="@style/Widget.Ctmsmobile.AppWidget.InnerView"
+        android:layout_width="293dp"
+        android:layout_height="78dp"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/appwidget_text"
+        android:text="Lịch học gần nhất"
+        android:textColor="#FFF"
+        android:background="#0096FF"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableRow>
+
+            <TextView
+                android:layout_height="50dp"
+                android:layout_weight="5"
+                android:background="#c98282"
+                android:gravity="center"
+                android:text="Thời gian"
+                android:textStyle="bold"
+                android:textColor="#FFF"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:layout_height="50dp"
+                android:layout_weight="5"
+                android:background="#0096FF"
+                android:gravity="center"
+                android:text="07:30 - 11:30"
+                android:textStyle="bold"
+                android:textColor="#FFF"
+                android:textSize="20sp"/>
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>
