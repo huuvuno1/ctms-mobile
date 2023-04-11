@@ -18,14 +18,15 @@
       "supportsTablet": true,
       "config": {
         "usesNonExemptEncryption": false
-      }
+      },
+      "bundleIdentifier": "com.ctmsmobile"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.nguyenhuuvu"
+      "package": "com.ctmsmobile"
     },
     "web": {
       "favicon": "./assets/favicon.png"
