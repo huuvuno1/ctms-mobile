@@ -67,10 +67,10 @@ const styles = StyleSheet.create({
   },
   rowText: {
     color: "#17202A",
-    fontWeight: "500",
+    fontWeight: "bold",
   },
   labelCredit: {
-    fontWeight: "600",
+    fontWeight: "bold",
     fontSize: 19,
     marginBottom: 13,
   },

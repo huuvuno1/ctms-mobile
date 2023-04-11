@@ -44,7 +44,7 @@ const ChangePasswordScreen = ({ navigation }) => {
         >
           <Text
             style={{
-              fontWeight: 600,
+              fontWeight: "bold",
               fontSize: 16,
               ...(status === "Mật khẩu đã được đổi thành công"
                 ? { color: "green" }
@@ -126,7 +126,7 @@ const ChangePasswordScreen = ({ navigation }) => {
       >
         <Text
           style={{
-            fontWeight: 600,
+            fontWeight: "bold",
             fontSize: 16,
             color: "#FFFFFF",
           }}
