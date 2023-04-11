@@ -7,6 +7,7 @@ import ClassScheduleScreen from "./ClassScheduleScreen";
 import TuitionBillScreen from "./TuitionBillScreen";
 import TuitionBillDetailScreen from "./TuitionBillDetailScreen";
 import CreditScreen from "./CreditScreen";
+import FithouArticlesScreen from "./FithouArticles";
 
 export {
   ScoreScreen,
@@ -16,6 +17,7 @@ export {
   NotificationScreen,
   SettingScreen,
   DashboardScreen,
+  FithouArticlesScreen,
   TuitionBillDetailScreen,
   CreditScreen,
 };

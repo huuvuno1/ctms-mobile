@@ -9,10 +9,10 @@ import {
   TuitionBillScreen,
   TuitionBillDetailScreen,
   CreditScreen,
+  FithouArticlesScreen,
 } from "../screens";
 import reload from "../../assets/reload.png";
 import { Image } from "react-native";
-
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -55,6 +55,14 @@ const routes = [
     },
   },
   {
+    name: SCREENS.FITHOU_ARTICLES,
+    component: FithouArticlesScreen,
+    options: {
+      headerShown: true,
+      title: "Fithou Articles",
+    },
+  },
+  {
     name: SCREENS.TUITION_BILL_DETAIL,
     component: TuitionBillDetailScreen,
     options: {
@@ -71,6 +79,8 @@ const routes = [
     },
   },
 ];
+
+console.log("routes", routes);
 
 const Routes = () => {
   return (
