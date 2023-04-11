@@ -189,9 +189,8 @@ const getExamSchedule = async () => {
       const room = $(row).find("td:nth-child(3)")?.text()?.trim();
       const subjectName = $(row).find("td:nth-child(4)")?.text()?.trim();
       const subjectId = $(row).find("td:nth-child(5)")?.text()?.trim();
-      let status = '';
       const formatDate = `${examTime.split(' ')[1].split('/')[2]}-${examTime.split(' ')[1].split('/')[1]}-${examTime.split(' ')[1].split('/')[0]}`;
-      dayjs().isBefore(dayjs(formatDate)) ? status = 'Sắp Thi' : status = 'Đã Thi';
+      const status = dayjs().isBefore(dayjs(formatDate)) ? status = 'Sắp Thi' : status = 'Đã Thi';
       result.push({
         subjectName,
         subjectId,
