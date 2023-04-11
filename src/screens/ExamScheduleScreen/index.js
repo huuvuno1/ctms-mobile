@@ -58,6 +58,10 @@ const ExamScheduleScreen = ({ navigation }) => {
                 <Image source={unique} style ={styles.subjectIcon}></Image>
                 <Text style= {styles.schedule}>{item.subjectId}</Text>
             </View>
+            <View style = {styles.row}>
+                <Image source={status} style= {styles.subjectIcon}></Image>
+                <Text style = {styles.schedule}>{item.status}</Text>
+            </View>
           </View>
         ))}
       </ScrollView>

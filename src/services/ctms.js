@@ -3,6 +3,7 @@ import * as cheerio from "cheerio";
 import dateFormat from "dateformat";
 import { requestLoginCtms, requestLogoutCtms } from "../apis/auth";
 import { repository, KEY } from "../repository";
+import dayjs from "dayjs";
 
 const login = async (username, password, withCredentials) => {
   const response = await requestLoginCtms(username, password, withCredentials);
@@ -188,17 +189,21 @@ const getExamSchedule = async () => {
       const room = $(row).find("td:nth-child(3)")?.text()?.trim();
       const subjectName = $(row).find("td:nth-child(4)")?.text()?.trim();
       const subjectId = $(row).find("td:nth-child(5)")?.text()?.trim();
+      let status = '';
+      const formatDate = `${examTime.split(' ')[1].split('/')[2]}-${examTime.split(' ')[1].split('/')[1]}-${examTime.split(' ')[1].split('/')[0]}`;
+      dayjs().isBefore(dayjs(formatDate)) ? status = 'Sắp Thi' : status = 'Đã Thi';
       result.push({
         subjectName,
         subjectId,
         examTime,
         room,
+        status,
       });
     });
     repository.storeData(KEY.EXAM_SCHEDULE, result);
     return result.reverse();
   } catch {
-    return repository.getData(KEY.EXAM_SCHEDULE);
+    return repository.getData(KEY.EXAM_SCHEDULE); 
   }
 };
 
