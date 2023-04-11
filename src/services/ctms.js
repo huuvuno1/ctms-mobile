@@ -3,6 +3,7 @@ import * as cheerio from "cheerio";
 import dateFormat from "dateformat";
 import { requestLoginCtms, requestLogoutCtms } from "../apis/auth";
 import { repository, KEY } from "../repository";
+import md5 from "md5";
 
 const login = async (username, password, withCredentials) => {
   const response = await requestLoginCtms(username, password, withCredentials);
@@ -236,7 +237,7 @@ const getInfo = async () => {
       path: "KetquaHoctap.aspx",
     });
     const $ = cheerio.load(response?.data || "");
-    const user = {};
+    const user = repository.getData(KEY.USER_INFO) || {};
     user.name = $(
       "#leftcontent > table.ThongtinSV > tbody > tr:nth-child(1) > td:nth-child(2)"
     )
@@ -442,6 +443,32 @@ const getCredits = async () => {
   }
 };
 
+const changePassword = async (oldPassword, newPassword) => {
+  try {
+    const response = await requestCtms({
+      path: "ChangePassword.aspx",
+      method: "post",
+      body: {
+        __VIEWSTATE:
+          "/wEPDwULLTE0NjgxOTA0MjgPZBYCZg9kFgICAw9kFgQCBQ9kFgJmD2QWBAICDw8WAh4EVGV4dAUFR3Vlc3RkZAIMDw9kFgIeB29uY2xpY2sFGHJldHVybiBoYXNoUFdEZm9yUG9zdCgpO2QCBg8PFgIeB1Zpc2libGVoZBYCAgMPEGRkFgBkZDmisBiN3Tvxg4FER6UNNABP+6YEPznt0DsC95J/024b",
+        __VIEWSTATEGENERATOR: "05F80A9A",
+        __EVENTVALIDATION:
+          "/wEdAAb/NDAq4BEXMo3pYu5fanJNIKIpbUfY0gqTvUOoROZZ7RMFBJMmV44m1jblWjbtAgwBhaQjuRKVg9GL23RWDvbt66NkVBMMW22rrSBRZFFeb9lvZ+yAVvVIR7BaXg9OEw3xvePz6iu7UZ/PuUcH2iV7AbzKNan5U3tAtbJRK+wkSg==",
+        ctl00$LeftCol$UsersChangePassword1$txtOldPassword: md5(oldPassword),
+        ctl00$LeftCol$UsersChangePassword1$txtPassword: md5(newPassword),
+        ctl00$LeftCol$UsersChangePassword1$txtConfirmPass: md5(newPassword),
+        ctl00$LeftCol$UsersChangePassword1$btnCapnhat: "Cập nhật",
+      },
+    });
+
+    const $ = cheerio.load(response?.data || "");
+    const message = $("#LeftCol_UsersChangePassword1_lblError").text()?.trim();
+    return message;
+  } catch (error) {
+    console.log("changePassword error", error);
+  }
+};
+
 export const ctmsService = {
   getInfo,
   login,
@@ -452,4 +479,5 @@ export const ctmsService = {
   getScore,
   getTuitionBillDetail,
   getCredits,
+  changePassword,
 };

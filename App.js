@@ -3,14 +3,16 @@ import Routes from "./src/routes";
 import { LogBox } from "react-native";
 import { SafeAreaView } from "react-native";
 
-LogBox.ignoreLogs(['Require cycles'])
+LogBox.ignoreLogs(["Require cycles", "textStyle"]);
 
 export default function App() {
   return (
-    <SafeAreaView style={{
-      flex: 1,
-      backgroundColor: 'white'
-    }}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: "white",
+      }}
+    >
       <NavigationContainer>
         <Routes />
       </NavigationContainer>

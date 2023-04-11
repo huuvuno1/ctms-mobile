@@ -3,14 +3,11 @@ import { TextInput } from "react-native";
 import styles from "./styles";
 
 const Input = ({ value, placeholder, customStyle, onChange, isSecure }) => {
-  const [text, setText] = React.useState(value);
-
   const handleChangeText = useCallback(
     (value) => {
-      setText(value);
-      onChange(value);
+      onChange && onChange(value);
     },
-    [onChange, setText]
+    [onChange]
   );
 
   return (
@@ -20,7 +17,7 @@ const Input = ({ value, placeholder, customStyle, onChange, isSecure }) => {
         ...customStyle,
       }}
       onChangeText={handleChangeText}
-      value={text}
+      value={value}
       placeholder={placeholder}
       secureTextEntry={isSecure || false}
     />
