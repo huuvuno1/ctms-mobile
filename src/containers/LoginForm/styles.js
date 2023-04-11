@@ -25,13 +25,13 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     borderRadius: 7,
     marginTop: 10,
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: "center",
+    justifyContent: "center",
   },
   buttonText: {
     color: "#FFFFFF",
-    fontWeight: 600,
-    fontSize: 16
+    fontWeight: "bold",
+    fontSize: 16,
   },
   forgotPassword: {
     marginTop: 20,
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   },
   errorMsg: {
     color: "red",
-    fontWeight: 600,
+    fontWeight: "bold",
     textAlign: "center",
   },
 });
