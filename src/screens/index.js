@@ -8,6 +8,8 @@ import TuitionBillScreen from "./TuitionBillScreen";
 import TuitionBillDetailScreen from "./TuitionBillDetailScreen";
 import CreditScreen from "./CreditScreen";
 import FithouArticlesScreen from "./FithouArticles";
+import UserDetailScreen from "./UserDetailScreen";
+import ChangePasswordScreen from "./ChangePasswordScreen";
 
 export {
   ScoreScreen,
@@ -20,4 +22,6 @@ export {
   FithouArticlesScreen,
   TuitionBillDetailScreen,
   CreditScreen,
+  UserDetailScreen,
+  ChangePasswordScreen,
 };

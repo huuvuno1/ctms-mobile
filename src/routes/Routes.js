@@ -10,6 +10,8 @@ import {
   TuitionBillDetailScreen,
   CreditScreen,
   FithouArticlesScreen,
+  UserDetailScreen,
+  ChangePasswordScreen,
 } from "../screens";
 import reload from "../../assets/reload.png";
 import { Image } from "react-native";
@@ -76,6 +78,22 @@ const routes = [
     options: {
       headerShown: true,
       title: "Tín chỉ",
+    },
+  },
+  {
+    name: SCREENS.USER_DETAIL,
+    component: UserDetailScreen,
+    options: {
+      headerShown: true,
+      title: "Thông tin tài khoản",
+    },
+  },
+  {
+    name: SCREENS.CHANGE_PASSWORD,
+    component: ChangePasswordScreen,
+    options: {
+      headerShown: true,
+      title: "Đổi mật khẩu",
     },
   },
 ];
