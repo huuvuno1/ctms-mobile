@@ -75,9 +75,9 @@ const routes = [
     name: SCREENS.EXAM_SCHEDULE,
     component: ExamScheduleScreen,
     options: {
-      headerShown:true,
+      title: 'Lịch thi',
     },
-  },
+  }
 ];
 
 const Routes = () => {

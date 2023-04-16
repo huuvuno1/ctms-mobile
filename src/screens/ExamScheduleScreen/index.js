@@ -1,23 +1,12 @@
 import { Text, ScrollView, View, Image } from "react-native";
 import { useEffect, useState } from "react";
-import RNDateTimePicker from "@react-native-community/datetimepicker";
-import dateFormat from "dateformat";
 import styles from "./styles";
 import { ctmsService } from "../../services";
-import picker from "../../../assets/picker.png";
-import prev from "../../../assets/prev.png";
-import next from "../../../assets/next.png";
-import morning from "../../../assets/morning.png";
-import afternoon from "../../../assets/afternoon.png";
-import evening from "../../../assets/evening.png";
-import teacher from "../../../assets/teacher.png";
 import room from "../../../assets/room.png";
 import status from "../../../assets/status.png";
 import unique from "../../../assets/unique.png";
 import lab from "../../../assets/lab.jpg"
 import schedule from "../../../assets/schedule.png"
-import { TouchableOpacity } from "react-native";
-import { DatePicker } from "../../components";
 
 const ExamScheduleScreen = ({ navigation }) => {
   const [data, setData] = useState([]);
@@ -40,28 +29,50 @@ const ExamScheduleScreen = ({ navigation }) => {
             style={{
               backgroundColor: '#fff',
               padding: 10,
-              marginBottom:20,
+              marginBottom: 20,
               borderRadius: 10,
+
             }}
           >
-            <Image source={lab} style= {styles.examClass} />
+            <View>
+              <View style={{
+                padding: 10,
+                width: 150,
+                borderTopRightRadius: 7,
+                position: 'absolute',
+                top: 0,
+                right: 0,
+                zIndex: 10,
+                ...(item.status === 'Sắp thi' ? {
+                  backgroundColor: 'red',
+                } : {
+                  backgroundColor: 'green'
+                })
+              }}>
+                <Text style={{
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                  color: 'white',
+                  fontSize: 18
+                }}>{item.status}</Text>
+              </View>
+              <Image source={lab} style={styles.examClass} />
+            </View>
             <Text style={styles.scheduleName}>{item.subjectName}</Text>
-            <View style= {styles.row}>
-                <Image source={schedule} style= {styles.subjectIcon}></Image>
-                <Text style= {styles.schedule}>{item.examTime}</Text>
+            <View style={styles.row}>
+              <Image source={schedule} style={styles.subjectIcon}></Image>
+              <Text style={styles.schedule}>{item.examTime}</Text>
             </View>
-            <View style= {styles.row}>
-                <Image source={room} style= {styles.subjectIcon}></Image>
-                <Text style= {styles.schedule}>{item.room}</Text>
+            <View style={styles.row}>
+              <Image source={room} style={styles.subjectIcon}></Image>
+              <Text style={styles.schedule}>{item.room}</Text>
             </View>
-            <View style= {styles.row}>
-                <Image source={unique} style ={styles.subjectIcon}></Image>
-                <Text style= {styles.schedule}>{item.subjectId}</Text>
+            <View style={styles.row}>
+              <Image source={unique} style={styles.subjectIcon}></Image>
+              <Text style={styles.schedule}>{item.subjectId}</Text>
             </View>
-            <View style = {styles.row}>
-                <Image source={status} style= {styles.subjectIcon}></Image>
-                <Text style = {styles.schedule}>{item.status}</Text>
-            </View>
+
+
           </View>
         ))}
       </ScrollView>
