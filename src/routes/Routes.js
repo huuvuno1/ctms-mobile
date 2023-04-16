@@ -12,6 +12,7 @@ import {
   FithouArticlesScreen,
   UserDetailScreen,
   ChangePasswordScreen,
+  ExamScheduleScreen
 } from "../screens";
 import reload from "../../assets/reload.png";
 import { Image } from "react-native";
@@ -96,6 +97,13 @@ const routes = [
       title: "Đổi mật khẩu",
     },
   },
+  {
+    name: SCREENS.EXAM_SCHEDULE,
+    component: ExamScheduleScreen,
+    options: {
+      title: 'Lịch thi',
+    },
+  }
 ];
 
 console.log("routes", routes);

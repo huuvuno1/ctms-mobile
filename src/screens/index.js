@@ -10,6 +10,7 @@ import CreditScreen from "./CreditScreen";
 import FithouArticlesScreen from "./FithouArticles";
 import UserDetailScreen from "./UserDetailScreen";
 import ChangePasswordScreen from "./ChangePasswordScreen";
+import ExamScheduleScreen from "./ExamScheduleScreen";
 
 export {
   ScoreScreen,
@@ -21,6 +22,7 @@ export {
   DashboardScreen,
   FithouArticlesScreen,
   TuitionBillDetailScreen,
+  ExamScheduleScreen,
   CreditScreen,
   UserDetailScreen,
   ChangePasswordScreen,
