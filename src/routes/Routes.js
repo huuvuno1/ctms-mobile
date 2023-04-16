@@ -1,19 +1,21 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { SCREENS } from '../constants';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { HomeLayout } from '../layout';
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { SCREENS } from "../constants";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { HomeLayout } from "../layout";
 import {
   ScoreScreen,
   LoginScreen,
   ClassScheduleScreen,
   TuitionBillScreen,
-  FithouArticlesScreen,
   TuitionBillDetailScreen,
-  ExamScheduleScreen,
-} from '../screens';
-import reload from '../../assets/reload.png';
-import { Image } from 'react-native';
-
+  CreditScreen,
+  FithouArticlesScreen,
+  UserDetailScreen,
+  ChangePasswordScreen,
+  ExamScheduleScreen
+} from "../screens";
+import reload from "../../assets/reload.png";
+import { Image } from "react-native";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -36,7 +38,7 @@ const routes = [
     name: SCREENS.SCORE,
     component: ScoreScreen,
     options: {
-      title: 'Kết quả học tập',
+      title: "Kết quả học tập",
     },
   },
   {
@@ -44,7 +46,7 @@ const routes = [
     component: ClassScheduleScreen,
     options: {
       headerShown: true,
-      title: 'Lịch học',
+      title: "Lịch học",
     },
   },
   {
@@ -52,7 +54,7 @@ const routes = [
     component: TuitionBillScreen,
     options: {
       headerShown: true,
-      title: 'Học phí',
+      title: "Học phí",
     },
   },
   {
@@ -60,7 +62,7 @@ const routes = [
     component: FithouArticlesScreen,
     options: {
       headerShown: true,
-      title: 'Fithou Articles',
+      title: "Fithou Articles",
     },
   },
   {
@@ -68,7 +70,31 @@ const routes = [
     component: TuitionBillDetailScreen,
     options: {
       headerShown: true,
-      title: 'Chi tiết hóa đơn',
+      title: "Chi tiết hóa đơn",
+    },
+  },
+  {
+    name: SCREENS.CREDIT,
+    component: CreditScreen,
+    options: {
+      headerShown: true,
+      title: "Tín chỉ",
+    },
+  },
+  {
+    name: SCREENS.USER_DETAIL,
+    component: UserDetailScreen,
+    options: {
+      headerShown: true,
+      title: "Thông tin tài khoản",
+    },
+  },
+  {
+    name: SCREENS.CHANGE_PASSWORD,
+    component: ChangePasswordScreen,
+    options: {
+      headerShown: true,
+      title: "Đổi mật khẩu",
     },
   },
   {
@@ -79,6 +105,8 @@ const routes = [
     },
   }
 ];
+
+console.log("routes", routes);
 
 const Routes = () => {
   return (
@@ -99,8 +127,8 @@ const Routes = () => {
                   source={reload}
                 />
               ),
-              animationTypeForReplace: 'push',
-              animation: 'slide_from_right',
+              animationTypeForReplace: "push",
+              animation: "slide_from_right",
               ...(route.options || {}),
             }}
           />

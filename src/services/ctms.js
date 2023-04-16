@@ -4,6 +4,7 @@ import dateFormat from "dateformat";
 import { requestLoginCtms, requestLogoutCtms } from "../apis/auth";
 import { repository, KEY } from "../repository";
 import dayjs from "dayjs";
+import md5 from "md5";
 const customParseFormat = require('dayjs/plugin/customParseFormat')
 dayjs.extend(customParseFormat)
 
@@ -242,7 +243,7 @@ const getInfo = async () => {
       path: "KetquaHoctap.aspx",
     });
     const $ = cheerio.load(response?.data || "");
-    const user = {};
+    const user = repository.getData(KEY.USER_INFO) || {};
     user.name = $(
       "#leftcontent > table.ThongtinSV > tbody > tr:nth-child(1) > td:nth-child(2)"
     )
@@ -362,6 +363,118 @@ export const getTuitionBillDetail = async (id) => {
   }
 };
 
+const getCredits = async () => {
+  const result = {
+    canRegister: [],
+    registered: [],
+  };
+  try {
+    let response = await requestCtms({
+      path: "DangkyLoptinchi.aspx?sid=",
+    });
+
+    const match = /getmodule:" \+ (\d+)/g.exec(response.data);
+    const id = match[1];
+
+    console.log("id", id);
+
+    response = await requestCtms({
+      path: "DangkyLoptinchi.aspx?sid=",
+      method: "POST",
+      body: {
+        __VIEWSTATE:
+          "/wEPDwUJNTU0NDQwMzk4ZGRMExXiqzsNsCGrc9WjobZoDcCzO2od6+mLzUrLiU+Rww==",
+        __VIEWSTATEGENERATOR: "4B900DBD",
+        __CALLBACKID: "__Page",
+        __CALLBACKPARAM: "getmodule:" + id,
+      },
+    });
+    const $ = cheerio.load(response?.data || "");
+    // console.log("response", response?.data);
+
+    const rows1 = $("#dvLopChoDangky > table > tbody > tr");
+    rows1.each((index, row) => {
+      if (index === 0) return;
+      const className = $(row).find("td:nth-child(2)")?.text()?.trim();
+      const teacher = $(row).find("td:nth-child(3)")?.text()?.trim();
+      const minStudent = $(row).find("td:nth-child(4)")?.text()?.trim();
+      const maxStudent = $(row).find("td:nth-child(5)")?.text()?.trim();
+      const registered = $(row).find("td:nth-child(6)")?.text()?.trim();
+      const registrationDeadline = $(row)
+        .find("td:nth-child(7)")
+        ?.text()
+        ?.trim();
+      const plan = $(row).find("td:nth-child(8)")?.text()?.trim();
+
+      result.canRegister.push({
+        className,
+        teacher,
+        minStudent,
+        maxStudent,
+        registered,
+        registrationDeadline,
+        plan,
+      });
+    });
+
+    const rows2 = $("#dvLopVuaDangky > table > tbody > tr");
+    rows2.each((index, row) => {
+      if (index === 0) return;
+      const className = $(row).find("td:nth-child(2)")?.text()?.trim();
+      const teacher = $(row).find("td:nth-child(3)")?.text()?.trim();
+      const minStudent = $(row).find("td:nth-child(4)")?.text()?.trim();
+      const maxStudent = $(row).find("td:nth-child(5)")?.text()?.trim();
+      const registered = $(row).find("td:nth-child(6)")?.text()?.trim();
+      const registrationDeadline = $(row)
+        .find("td:nth-child(7)")
+        ?.text()
+        ?.trim();
+      const plan = $(row).find("td:nth-child(8)")?.text()?.trim();
+
+      result.registered.push({
+        className,
+        teacher,
+        minStudent,
+        maxStudent,
+        registered,
+        registrationDeadline,
+        plan,
+      });
+    });
+
+    return result;
+  } catch (e) {
+    console.log("getCredits error", e);
+    return result;
+  }
+};
+
+const changePassword = async (oldPassword, newPassword) => {
+  try {
+    const response = await requestCtms({
+      path: "ChangePassword.aspx",
+      method: "post",
+      body: {
+        __VIEWSTATE:
+          "/wEPDwULLTE0NjgxOTA0MjgPZBYCZg9kFgICAw9kFgQCBQ9kFgJmD2QWBAICDw8WAh4EVGV4dAUFR3Vlc3RkZAIMDw9kFgIeB29uY2xpY2sFGHJldHVybiBoYXNoUFdEZm9yUG9zdCgpO2QCBg8PFgIeB1Zpc2libGVoZBYCAgMPEGRkFgBkZDmisBiN3Tvxg4FER6UNNABP+6YEPznt0DsC95J/024b",
+        __VIEWSTATEGENERATOR: "05F80A9A",
+        __EVENTVALIDATION:
+          "/wEdAAb/NDAq4BEXMo3pYu5fanJNIKIpbUfY0gqTvUOoROZZ7RMFBJMmV44m1jblWjbtAgwBhaQjuRKVg9GL23RWDvbt66NkVBMMW22rrSBRZFFeb9lvZ+yAVvVIR7BaXg9OEw3xvePz6iu7UZ/PuUcH2iV7AbzKNan5U3tAtbJRK+wkSg==",
+        ctl00$LeftCol$UsersChangePassword1$txtOldPassword: md5(oldPassword),
+        ctl00$LeftCol$UsersChangePassword1$txtPassword: md5(newPassword),
+        ctl00$LeftCol$UsersChangePassword1$txtConfirmPass: md5(newPassword),
+        ctl00$LeftCol$UsersChangePassword1$btnCapnhat: "Cập nhật",
+      },
+    });
+
+    const $ = cheerio.load(response?.data || "");
+    const message = $("#LeftCol_UsersChangePassword1_lblError").text()?.trim();
+    return message;
+  } catch (error) {
+    console.log("changePassword error", error);
+  }
+};
+
 export const ctmsService = {
   getInfo,
   login,
@@ -371,4 +484,6 @@ export const ctmsService = {
   getExamSchedule,
   getScore,
   getTuitionBillDetail,
+  getCredits,
+  changePassword,
 };

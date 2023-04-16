@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import styles from "./styles";
 import { ctmsService } from "../../services";
 import room from "../../../assets/room.png";
-import status from "../../../assets/status.png";
 import unique from "../../../assets/unique.png";
 import lab from "../../../assets/lab.jpg"
 import schedule from "../../../assets/schedule.png"

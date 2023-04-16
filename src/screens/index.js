@@ -5,8 +5,11 @@ import NotificationScreen from "./NotificationScreen";
 import DashboardScreen from "./DashboardScreen";
 import ClassScheduleScreen from "./ClassScheduleScreen";
 import TuitionBillScreen from "./TuitionBillScreen";
-import FithouArticlesScreen from "./FithouArticles";
 import TuitionBillDetailScreen from "./TuitionBillDetailScreen";
+import CreditScreen from "./CreditScreen";
+import FithouArticlesScreen from "./FithouArticles";
+import UserDetailScreen from "./UserDetailScreen";
+import ChangePasswordScreen from "./ChangePasswordScreen";
 import ExamScheduleScreen from "./ExamScheduleScreen";
 
 export {
@@ -20,4 +23,7 @@ export {
   FithouArticlesScreen,
   TuitionBillDetailScreen,
   ExamScheduleScreen,
+  CreditScreen,
+  UserDetailScreen,
+  ChangePasswordScreen,
 };

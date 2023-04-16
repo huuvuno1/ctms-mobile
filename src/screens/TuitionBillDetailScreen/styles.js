@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: "center",
-    fontWeight: "100",
+    // fontWeight: "100",
     color: "white",
     fontWeight: "bold",
     fontSize: 16,
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   },
   rowText: {
     color: "#17202A",
-    fontWeight: "500",
+    fontWeight: "normal",
   },
 });
 
