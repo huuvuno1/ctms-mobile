@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import {
   Image,
   ImageBackground,
@@ -7,22 +7,22 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import * as SecureStore from 'expo-secure-store';
-import { SCREENS, SECURE_STORE } from '../../constants';
-import styles from './styles';
-import BlueBg from '../../../assets/blue.jpg';
-import QC from '../../../assets/qc.jpg';
-import schedule from '../../../assets/schedule.png';
-import exam from '../../../assets/exam.png';
-import credit from '../../../assets/credit.png';
-import score from '../../../assets/score.png';
-import bill from '../../../assets/bill.png';
-import post from '../../../assets/post.png';
-import reload from '../../../assets/reload.png';
-import { ctmsService } from '../../services';
-import { KEY, repository } from '../../repository';
+} from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import * as SecureStore from "expo-secure-store";
+import { SCREENS, SECURE_STORE } from "../../constants";
+import styles from "./styles";
+import BlueBg from "../../../assets/blue.jpg";
+import QC from "../../../assets/qc.jpg";
+import schedule from "../../../assets/schedule.png";
+import exam from "../../../assets/exam.png";
+import credit from "../../../assets/credit.png";
+import score from "../../../assets/score.png";
+import bill from "../../../assets/bill.png";
+import post from "../../../assets/post.png";
+import reload from "../../../assets/reload.png";
+import { ctmsService } from "../../services";
+import { KEY, repository } from "../../repository";
 
 const Tab = createBottomTabNavigator();
 
@@ -77,7 +77,7 @@ const DashboardScreen = ({ navigation }) => {
               style={[
                 styles.qcName,
                 {
-                  fontWeight: 'normal',
+                  fontWeight: "normal",
                 },
               ]}
             >
