@@ -4,6 +4,8 @@
   <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
   <uses-permission android:name="android.permission.VIBRATE"/>
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+  <uses-permission android:name="android.permission.WAKE_LOCK" />
   <queries>
     <intent>
       <action android:name="android.intent.action.VIEW"/>
@@ -29,6 +31,22 @@
         <data android:scheme="com.ctmsmobile"/>
       </intent-filter>
     </activity>
+    <service
+        android:name="com.reactnativeandroidwidget.RNWidgetBackgroundTaskService"
+        android:enabled="true"
+        android:label="RNWidgetBackgroundTaskService" />
+    <receiver
+        android:name=".widget.ClassSchedule"
+        android:exported="false"
+        android:label="Xem lịch học">
+      <intent-filter>
+        <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+        <action android:name="com.ctmsmobile.WIDGET_CLICK" />
+      </intent-filter>
+      <meta-data
+          android:name="android.appwidget.provider"
+          android:resource="@xml/widgetprovider_classschedule" />
+    </receiver>
     <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" android:exported="false"/>
   </application>
 </manifest>

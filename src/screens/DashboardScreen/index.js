@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import {
   Image,
   ImageBackground,
@@ -7,28 +7,29 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import * as SecureStore from 'expo-secure-store';
-import { SCREENS, SECURE_STORE } from '../../constants';
-import styles from './styles';
-import BlueBg from '../../../assets/blue.jpg';
-import QC from '../../../assets/qc.jpg';
-import schedule from '../../../assets/schedule.png';
-import exam from '../../../assets/exam.png';
-import credit from '../../../assets/credit.png';
-import score from '../../../assets/score.png';
-import bill from '../../../assets/bill.png';
-import post from '../../../assets/post.png';
-import reload from '../../../assets/reload.png';
-import { ctmsService } from '../../services';
-import { KEY, repository } from '../../repository';
+} from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import * as SecureStore from "expo-secure-store";
+import { SCREENS, SECURE_STORE } from "../../constants";
+import styles from "./styles";
+import BlueBg from "../../../assets/blue.jpg";
+import QC from "../../../assets/qc.jpg";
+import schedule from "../../../assets/schedule.png";
+import exam from "../../../assets/exam.png";
+import credit from "../../../assets/credit.png";
+import score from "../../../assets/score.png";
+import bill from "../../../assets/bill.png";
+import post from "../../../assets/post.png";
+import reload from "../../../assets/reload.png";
+import { ctmsService } from "../../services";
+import { KEY, repository } from "../../repository";
 
 const Tab = createBottomTabNavigator();
 
 const DashboardScreen = ({ navigation }) => {
   const [name, setName] = useState();
   const [subject, setSubject] = useState();
+  const [nearestClass, setNearestClass] = useState({});
 
   useEffect(() => {
     (async () => {
@@ -50,6 +51,11 @@ const DashboardScreen = ({ navigation }) => {
       }
 
       setSubject(subjects[0]);
+
+
+      // get nearest class
+      const nearest = await ctmsService.getNearestClass();
+      setNearestClass(nearest)
     })();
   }, []);
 
@@ -77,7 +83,7 @@ const DashboardScreen = ({ navigation }) => {
               style={[
                 styles.qcName,
                 {
-                  fontWeight: 'normal',
+                  fontWeight: "normal",
                 },
               ]}
             >
@@ -96,11 +102,11 @@ const DashboardScreen = ({ navigation }) => {
         <ImageBackground source={BlueBg} style={styles.imgBg}>
           <View style={styles.wrapperQc}>
             <Text style={styles.qcTitle}>Lịch học gần nhất của bạn</Text>
-            <Text style={styles.subject}>Nhập môn công nghệ phần mềm</Text>
-            <Text style={styles.qcName}>Phòng: 20</Text>
-            <Text style={styles.qcName}>Giảng viên: Nguyễn Đức Tuấn</Text>
-            <Text style={styles.qcName}>Giờ: 07:30 - 15:15</Text>
-            <Text style={styles.qcName}>Ngày: 20/01/2023</Text>
+            <Text style={styles.subject}>{nearestClass?.name}</Text>
+            <Text style={styles.qcName}>Phòng: {nearestClass?.room}</Text>
+            <Text style={styles.qcName}>Giảng viên: {nearestClass?.teacher}</Text>
+            <Text style={styles.qcName}>Mã lớp: {nearestClass?.classId}</Text>
+            <Text style={styles.qcName}>Thời gian: {nearestClass?.day}</Text>
           </View>
         </ImageBackground>
       </View>

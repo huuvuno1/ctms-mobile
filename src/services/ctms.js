@@ -475,6 +475,38 @@ const changePassword = async (oldPassword, newPassword) => {
   }
 };
 
+const getNearestClass = async () => {
+  const currentWeek = await getClassSchedule();
+  let result = {};
+  const now = dateFormat(new Date(), "HH:MM dd/mm/yyyy");
+  const nearestDay = currentWeek.find((item) => {
+    const day = item.day.match(/\d{2}\/\d{2}\/\d{4}/)?.[0]
+    const check = dayjs(now, "HH:mm DD/MM/YYYY").isSame(dayjs(day, "DD/MM/YYYY"), 'day')
+    console.log(check, day, now)
+    if (check) {
+      const nearest = item.classes.find(value => {
+        return dayjs(now, "HH:mm DD/MM/YYYY").isBefore(dayjs(`${value.time?.split(" ->")?.[1]} ${day}`, "HH:mm DD/MM/YYYY"))
+      })
+      if (nearest) {
+        result.day = `${nearest.time?.split(" ")?.[0]} ${day}`;
+        result = { ...result, ...nearest }
+        return result;
+      }
+    }
+
+    return dayjs(now, "HH:mm DD/MM/YYYY").isBefore(dayjs(day, "DD/MM/YYYY"))
+  });
+
+  if (nearestDay) {
+    const day = nearestDay.day.match(/\d{2}\/\d{2}\/\d{4}/)?.[0]
+    const nearestClass = nearestDay.classes[0]
+    result.day = `${nearestClass.time?.split(" ")?.[0]} ${day}`;
+    result = { ...result, ...nearestClass }
+  }
+  console.log("nearestDay", JSON.stringify(result));
+  return result;
+}
+
 export const ctmsService = {
   getInfo,
   login,
@@ -486,4 +518,5 @@ export const ctmsService = {
   getTuitionBillDetail,
   getCredits,
   changePassword,
+  getNearestClass
 };

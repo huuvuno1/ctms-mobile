@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     flexDirection: "column",
     paddingHorizontal: 15,
-    paddingVertical: 22,
+    // paddingVertical: 22,
     fontFamily: Platform.OS === "ios" ? undefined : "monospace",
   },
   reload: {
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   scheduleWrapper: {
     backgroundColor: "#89CFF0",
     borderRadius: 15,
-    height: 170,
+    minHeight: 170,
     marginBottom: 20,
   },
   imgBg: {

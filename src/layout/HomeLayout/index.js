@@ -25,12 +25,12 @@ const HomeLayout = ({ navigation }) => {
           tabBarIcon: ({ color, size }) => (<Icon name="home" color={color} size={size} />),
           tabBarShowLabel: false
         }} />
-      <Tab.Screen name={SCREENS.NOTIFICATION} component={NotificationScreen}
+      {/* <Tab.Screen name={SCREENS.NOTIFICATION} component={NotificationScreen}
         options={{
           headerShown: false,
           tabBarIcon: ({ color, size }) => (<Icon name="notifications" color={color} size={size} />),
           tabBarShowLabel: false
-        }} />
+        }} /> */}
       <Tab.Screen name={SCREENS.SETTING} component={SettingScreen}
         options={{
           headerShown: false,
