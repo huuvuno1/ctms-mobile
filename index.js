@@ -1,7 +1,6 @@
 import { registerRootComponent } from "expo";
 import {
-  registerWidgetTaskHandler,
-  requestWidgetUpdate,
+  registerWidgetTaskHandler
 } from "react-native-android-widget";
 import {
   updateWidget,
@@ -21,7 +20,7 @@ registerWidgetTaskHandler(widgetTaskHandler);
 const BACKGROUND_FETCH_TASK = "background-fetch";
 TaskManager.defineTask(BACKGROUND_FETCH_TASK, updateWidget);
 BackgroundFetch.registerTaskAsync(BACKGROUND_FETCH_TASK, {
-  minimumInterval: 10, // 15 minutes
+  minimumInterval: 60 * 15, // 15 minutes
   stopOnTerminate: false, // android only,
   startOnBoot: true, // android only
 });

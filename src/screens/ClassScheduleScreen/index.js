@@ -1,12 +1,7 @@
 import { Text, ScrollView, View, Image } from "react-native";
 import { useEffect, useState } from "react";
-import RNDateTimePicker from "@react-native-community/datetimepicker";
-import dateFormat from "dateformat";
 import styles from "./styles";
 import { ctmsService } from "../../services";
-import picker from "../../../assets/picker.png";
-import prev from "../../../assets/prev.png";
-import next from "../../../assets/next.png";
 import morning from "../../../assets/morning.png";
 import afternoon from "../../../assets/afternoon.png";
 import evening from "../../../assets/evening.png";
@@ -14,7 +9,6 @@ import teacher from "../../../assets/teacher.png";
 import room from "../../../assets/room.png";
 import status from "../../../assets/status.png";
 import unique from "../../../assets/unique.png";
-import { TouchableOpacity } from "react-native";
 import { DatePicker } from "../../components";
 
 const ClassScheduleScreen = ({ navigation }) => {
@@ -31,7 +25,7 @@ const ClassScheduleScreen = ({ navigation }) => {
   useEffect(() => {
     const getData = async () => {
       const data = await ctmsService.getClassSchedule();
-      console.log("data", data);
+      console.log("data", JSON.stringify(data));
       setData(data);
     };
     getData();

@@ -1,20 +1,21 @@
 import React from "react";
 import { requestWidgetUpdate } from "react-native-android-widget";
 import { ctmsService } from "../services";
-import { HelloWidget } from "./ClassSchedule/HelloWidget";
+import { ClassScheduleWidget } from "./ClassScheduleWidget";
 import dateFormat from "dateformat";
 
 const nameToWidget = {
-  Hello: HelloWidget,
+  ClassSchedule: ClassScheduleWidget,
 };
 
 export async function widgetTaskHandler(props) {
   const widgetInfo = props.widgetInfo;
   const Widget = nameToWidget[widgetInfo.widgetName];
+  const data = await ctmsService.getNearestClass();
 
   switch (props.widgetAction) {
     case "WIDGET_ADDED":
-      props.renderWidget(<Widget />);
+      props.renderWidget(<Widget data={data} test={"oke em"} />);
       break;
 
     case "WIDGET_RESIZED":
@@ -22,7 +23,7 @@ export async function widgetTaskHandler(props) {
       break;
 
     case "WIDGET_CLICK":
-      // Not needed for now
+      props.clickAction = "OPEN_APP";
       break;
 
     default:
@@ -31,15 +32,12 @@ export async function widgetTaskHandler(props) {
 }
 
 export async function updateWidget() {
-  const data = await ctmsService.getClassSchedule();
-  const today = dateFormat(new Date(), "dd/mm/yyyy");
-  console.log("ok", data);
-  const todaySchedule = data.find((item) => item?.day?.includes(today));
-  console.log("todaySchedule", todaySchedule);
+  const data = await ctmsService.getNearestClass();
+  console.log('update widget')
 
   requestWidgetUpdate({
-    widgetName: "Hello",
-    renderWidget: () => <HelloWidget text={"ok" + todaySchedule.length} />,
+    widgetName: "ClassSchedule",
+    renderWidget: () => <ClassScheduleWidget data={data} test="ok k k " />,
     widgetNotFound: () => {
       console.log("Widget not found");
     },
