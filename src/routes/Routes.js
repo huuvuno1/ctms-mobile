@@ -16,8 +16,14 @@ import {
 } from "../screens";
 import reload from "../../assets/reload.png";
 import { Image } from "react-native";
+import WebView from "react-native-webview";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+
+const MyWebComponent = ({ route }) => {
+  const { url } = route.params;
+  return <WebView source={{ uri: url }} style={{ flex: 1 }} />;
+}
 
 const routes = [
   {
@@ -100,6 +106,13 @@ const routes = [
   {
     name: SCREENS.EXAM_SCHEDULE,
     component: ExamScheduleScreen,
+    options: {
+      title: 'Lịch thi',
+    },
+  },
+  {
+    name: "webview",
+    component: MyWebComponent,
     options: {
       title: 'Lịch thi',
     },
