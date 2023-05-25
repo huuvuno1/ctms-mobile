@@ -114,7 +114,7 @@ const routes = [
     name: "webview",
     component: MyWebComponent,
     options: {
-      title: 'Lịch thi',
+      title: 'Thông báo từ Fithou',
     },
   }
 ];
@@ -131,15 +131,15 @@ const Routes = () => {
             name={route.name}
             component={route.component}
             options={{
-              headerRight: () => (
-                <Image
-                  style={{
-                    width: 20,
-                    height: 20,
-                  }}
-                  source={reload}
-                />
-              ),
+              // headerRight: () => (
+              //   <Image
+              //     style={{
+              //       width: 20,
+              //       height: 20,
+              //     }}
+              //     source={reload}
+              //   />
+              // ),
               animationTypeForReplace: "push",
               animation: "slide_from_right",
               ...(route.options || {}),

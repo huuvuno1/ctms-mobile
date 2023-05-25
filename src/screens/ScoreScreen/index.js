@@ -103,6 +103,7 @@ const ScoreScreen = ({ navigation }) => {
     const result = [];
     let credit = 0;
     let sum10 = 0;
+    let sum4 = 0;
     data?.forEach((item) => {
       const score_3 = item.score_3.split(' |')[0]
       const score_4 = (+item.score_1 * 0.1 + +item.score_2 * 0.2 + +score_3 * 0.7);
@@ -119,15 +120,19 @@ const ScoreScreen = ({ navigation }) => {
         rowData.push(getScore_5(score_4))
 
         sum10 += +(score_4.toFixed(2)) * +item.credit
+        sum4 += getScore_5(score_4) * +item.credit
         credit += +item.credit
       }
       result.push(rowData);
     });
 
+    console.log(sum4 / credit)
+
     if (data?.length) {
       setOverview({
         credit,
-        score_10: (sum10 / credit).toFixed(2)
+        score_10: (sum10 / credit).toFixed(2),
+
       })
     }
 
@@ -144,26 +149,28 @@ const ScoreScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.summaryWrapper}>
-        <View style={[styles.summaryItem, styles.mr7]}>
-          <View style={styles.summaryLeftItem}>
-            <Text style={styles.summaryLabel}>Điểm TB hệ 10</Text>
-            <Text style={styles.summaryValue}>{overview.score_10 || ''}</Text>
+      {
+        true && (<View style={styles.summaryWrapper}>
+          <View style={[styles.summaryItem, styles.mr7]}>
+            <View style={styles.summaryLeftItem}>
+              <Text style={styles.summaryLabel}>Điểm TB hệ 10</Text>
+              <Text style={styles.summaryValue}>{overview.score_10 || ''}</Text>
+            </View>
+            <View>
+              <Image source={summaryScore} style={styles.summaryIcon} />
+            </View>
           </View>
-          <View>
-            <Image source={summaryScore} style={styles.summaryIcon} />
+          <View style={[styles.summaryItem, styles.ml7]}>
+            <View style={styles.summaryLeftItem}>
+              <Text style={styles.summaryLabel}>Tín chỉ tích lũy</Text>
+              <Text style={styles.summaryValue}>{overview.credit || ''}</Text>
+            </View>
+            <View>
+              <Image source={sum} style={styles.summaryIcon} />
+            </View>
           </View>
-        </View>
-        <View style={[styles.summaryItem, styles.ml7]}>
-          <View style={styles.summaryLeftItem}>
-            <Text style={styles.summaryLabel}>Tín chỉ tích lũy</Text>
-            <Text style={styles.summaryValue}>{overview.credit || ''}</Text>
-          </View>
-          <View>
-            <Image source={sum} style={styles.summaryIcon} />
-          </View>
-        </View>
-      </View>
+        </View>)
+      }
       <ScrollView horizontal={true}>
         <View>
           <Table borderStyle={{ borderWidth: 1, borderColor: "#C1C0B9" }}>
